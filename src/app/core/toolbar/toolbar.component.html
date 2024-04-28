@@ -1,0 +1,26 @@
+<mat-toolbar class="vet-primary mat-elevation-z6">
+    <span class="title">
+        <mat-icon>pets</mat-icon><b>TheAgents</b>
+    </span>
+    <div class="spacer"></div>
+    <div class="list-option">
+        @if(token != ''){
+          @for(element of component; track element){
+          <a mat-button class="btn-option" [routerLink]="'theagents/'+element.redirection">
+              {{element.name}}
+          </a>
+          }
+          <a mat-button class="btn-user-logged"><i class="bi bi-person-circle"></i> {{username}}</a>
+        }
+        @else {
+          @for(element of withoutLogin; track element){
+          <a mat-button class="btn-option" [routerLink]="element.redirection">
+              {{element.name}}
+          </a>
+          }
+        }
+
+    </div>
+</mat-toolbar>
+<footer>
+</footer>
