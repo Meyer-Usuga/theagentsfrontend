@@ -5,7 +5,7 @@
     <div class="spacer"></div>
     <div class="list-option">
         @if(token != ''){
-          @for(element of component; track element){
+          @for(element of loggedIn; track element){
           <a mat-button class="btn-option" [routerLink]="'theagents/'+element.redirection">
               {{element.name}}
           </a>

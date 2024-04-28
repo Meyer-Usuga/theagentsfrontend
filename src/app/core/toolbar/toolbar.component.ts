@@ -27,7 +27,7 @@ interface Components {
 })
 export class ToolbarComponent implements OnInit {
 
-  public component: Components[] = [];
+  public loggedIn: Components[] = [];
   public withoutLogin: Components[] = [];
   public token: any;
   public username: any;
@@ -60,7 +60,7 @@ export class ToolbarComponent implements OnInit {
       }
     ];
 
-    this.component = [
+    this.loggedIn = [
       {
         name: 'Inicio',
         redirection: 'home',
