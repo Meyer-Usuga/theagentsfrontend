@@ -2,3 +2,17 @@
 /* Estilos para los temas de angular material e iconos */
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  body {
+    animation: fadeIn 1s ease-in;
+  }

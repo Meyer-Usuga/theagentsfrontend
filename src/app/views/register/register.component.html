@@ -1,1 +1,48 @@
-<p>register works!</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form>
+                <div class="title">
+                    <h1>Regístrate</h1>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control d-inline-block mr-2" type="text" id="txtName" placeholder="Nombre">
+                    <input class="form-control d-inline-block" type="text" id="txtUser" placeholder="Nickname">
+                </div>
+                <div class="mb-3">
+                    <input class="form-control d-inline-block mr-2" type="number" id="txtDocument"
+                        placeholder="Documento">
+                    <input class="form-control d-inline-block" type="number" id="txtNumber" placeholder="Teléfono">
+                </div>
+                <div class="mb-3">
+                    <input class="form-control d-inline-block mr-2" type="email" id="txtEmail" placeholder="Correo">
+                    <input class="form-control d-inline-block" type="password" id="txtPassword" placeholder="Clave">
+                </div>
+                <div class="mb-3">
+                    <input class="form-control d-inline-block mb-4" type="number" id="txtAge" placeholder="Edad">
+                    <select class="form-select d-inline-block" aria-label="Select charge" aria-placeholder="Cargo">
+                        <option disabled selected value="">Cargo</option>
+                        <option value="">Acudiente</option>
+                        <option value="">Veterinario</option>
+                        <option value="">Recepcionista</option>
+                        <option value="">Administrador</option>
+                    </select>
+                </div>
+                <div class="mb-3 form-check">
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="cbFemale">
+                        <label class="form-check-label" for="cbFemale">Mujer</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="cbMale">
+                        <label class="form-check-label" for="cbMale">Hombre</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Crear usuario</button>
+                <div class="form-text" id="login-redirection">
+                    ¿Ya tienes una cuenta? <a [routerLink]="'/login'">Inicia sesión</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

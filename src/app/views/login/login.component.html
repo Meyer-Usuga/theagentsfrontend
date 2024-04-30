@@ -1,1 +1,25 @@
-<p>login works!</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form>
+                <div class="title">
+                    <h1>Login</h1>
+                    <h3>Bienvenido de nuevo!</h3>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="txtUser" id="txtUser" placeholder="Nickname">
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="txtPassword" id="txtPassword" placeholder="Clave">
+                </div>
+                <div id="passHelp" class="form-text">
+                    ¿Olvidaste tu contraseña?
+                </div>
+                <button type="submit" class="btn btn-primary">Acceso</button>
+                <div class="form-text">
+                    ¿No tienes cuenta? <a [routerLink]="'/register'">Regístrate</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
