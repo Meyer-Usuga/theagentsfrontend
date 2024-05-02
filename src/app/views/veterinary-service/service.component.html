@@ -5,12 +5,13 @@
                 <h1>Elige un servicio</h1>
             </div>
             <div class="services">
-                @for(service of listServices; track service){
+                @for(service of getCurrentServices(); track service){
                 <mat-card class="card">
                     <img mat-card-image src="{{service.img}}" alt="Foto vacuna">
                     <mat-card-content>
                         <h4>{{service.name}}</h4>
                         <p>{{service.description}}</p>
+                        <strong><p>{{service.price}}</p></strong>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-raised-button color="accent">Seleccionar</button>
@@ -20,8 +21,8 @@
             </div>
         </section>
         <div class="navegation-buttons">
-            <button id="btn-back"><</button>
-            <button id="btn-next">></button>
+            <button id="btn-back" (click)="prevPage()"><</button>
+            <button id="btn-next" (click)="nextPage()">></button>
         </div>
     </div>
 </div>

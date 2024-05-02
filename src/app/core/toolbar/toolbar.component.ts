@@ -5,8 +5,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
-
-
 /** Interfaz para almacenar las rutas */
 interface Components {
   name: string
@@ -35,7 +33,7 @@ export class ToolbarComponent implements OnInit {
   constructor() { }
 
   /** Método que se ejecuta después de cargar el componente 
-  * @author Meyer Usuga Restrepo
+  * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
   ngOnInit(): void {
     this.getComponents();
@@ -45,7 +43,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   /** Método que lista el nombre y el acceso a los componentes
-  * @author Meyer Usuga Restrepo
+  * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
   getComponents() {
 
