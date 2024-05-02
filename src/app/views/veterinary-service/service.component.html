@@ -1,1 +1,27 @@
-<p>service works!</p>
+<div class="container-fluid">
+    <div class="flex-container">
+        <section>
+            <div class="title">
+                <h1>Elige un servicio</h1>
+            </div>
+            <div class="services">
+                @for(service of listServices; track service){
+                <mat-card class="card">
+                    <img mat-card-image src="{{service.img}}" alt="Foto vacuna">
+                    <mat-card-content>
+                        <h4>{{service.name}}</h4>
+                        <p>{{service.description}}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="accent">Seleccionar</button>
+                    </mat-card-actions>
+                </mat-card>
+                }
+            </div>
+        </section>
+        <div class="navegation-buttons">
+            <button id="btn-back"><</button>
+            <button id="btn-next">></button>
+        </div>
+    </div>
+</div>

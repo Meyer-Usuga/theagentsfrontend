@@ -1,0 +1,57 @@
+/* Estilos de los contenedores */
+.container-fluid {
+    align-items: center;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+section {
+    margin-left: 10%;
+    flex: 1;
+}
+
+/* Estilos de los titulos y textos*/
+
+.title {
+    width: 70%;
+}
+
+.title h1 {
+    font-size: 85px;
+    font-weight: bold;
+}
+
+.title h4 {
+    font-size: 40px;
+}
+
+.abaout {
+    font-size: 18px;
+    width: 80%;
+}
+
+/* Estilos del banner */
+.bannerHome {
+    padding: 0;
+    width: 45%;
+}
+
+.bannerHome img {
+    width: 100%;
+}
+
+/* Estilos del boton */
+.btn-learn-more{
+    color: black;
+    border: none;
+    font-size: 17px;
+    border-radius: 10px;
+    background-color: #E6E57E;
+}
+
+.btn-learn-more:hover{
+    transform: scale(1.1);
+}

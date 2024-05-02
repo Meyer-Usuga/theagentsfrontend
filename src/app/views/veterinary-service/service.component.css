@@ -1,0 +1,59 @@
+.container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.title{
+    margin-bottom: 15px;
+}
+
+.title h1{
+    font-weight: bold;
+    font-size: 70px;
+}
+.services {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.card {
+    width: 300px;
+    margin-right: 20px;
+    border-radius: 10px;
+    background-color: rgb(214, 213, 213);
+    align-items: center;
+    text-align: center;
+}
+
+.card img {
+    width: 50%;
+}
+
+#btn-back{
+    border: none;
+    font-size: 24px;
+    float: inline-start;
+    font-weight: bold;
+    background-color: transparent !important;
+}
+
+#btn-back:hover{
+    font-size: 27px;
+    color: brown;
+}
+
+#btn-next{
+    border: none;
+    font-size: 24px;
+    float: inline-end;
+    font-weight: bold;
+    background-color: transparent !important;
+}
+
+#btn-next:hover{
+    font-size: 27px;
+    color: brown;
+}

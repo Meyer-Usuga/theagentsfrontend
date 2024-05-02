@@ -40,7 +40,7 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.getComponents();
     /** Este token debe ser generado desde el backend, o asignado desde el login */
-    this.token = '';
+    this.token = '99DSAMXKAIUWJDSATTYYUXUAZ';
     this.username = 'Meyer'
   }
 
