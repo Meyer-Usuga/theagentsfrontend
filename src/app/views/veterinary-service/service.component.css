@@ -11,7 +11,7 @@
 
 .title h1{
     font-weight: bold;
-    font-size: 70px;
+    font-size: 65px;
 }
 .services {
     display: flex;
@@ -21,7 +21,7 @@
 
 .card {
     width: 300px;
-    margin-right: 20px;
+    margin: 15px;
     border-radius: 10px;
     background-color: rgb(214, 213, 213);
     align-items: center;
@@ -30,6 +30,11 @@
 
 .card img {
     width: 50%;
+}
+
+.card:hover{
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
 #btn-back{

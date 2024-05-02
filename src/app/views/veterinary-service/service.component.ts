@@ -1,25 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 /** Componentes de angular material */
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+
 /** Interfaz para los servicios de veterinaria */
 interface typeService {
+  id: string
   img: any
   name: string
-  description: string
   price: string
+  description: string
 }
 
 @Component({
   selector: 'app-service',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule],
+  imports: [MatButtonModule, MatCardModule,RouterLink],
   templateUrl: './service.component.html',
   styleUrl: './service.component.css'
 })
 export default class ServiceComponent implements OnInit {
 
+  /** Inyectamos el router para manipuar la url */
+  router = inject(Router);
+
   public listServices: typeService[] = [];
+  
   /** Variables para controlar el carousel */
   currentPage = 0; //tarjetas actuales
   servicesPerPage = 3; //servicios por página
@@ -39,34 +47,39 @@ export default class ServiceComponent implements OnInit {
   loadServices() {
     this.listServices = [
       {
+        id: '1',
         img: 'assets/img/card-consulta.png',
         name: 'Consulta',
-        description: 'Consulta veterinaria estándar',
-        price: '50.00$'
+        price: '50.00$',
+        description: 'Consulta veterinaria estándar'
       },
       {
+        id: '2',
         img: 'assets/img/card-peluqueria.png',
         name: 'Peluqueria',
-        description: 'Corte de pelo y baño para mascotas',
-        price: '40.00$'
+        price: '40.00$',
+        description: 'Corte de pelo y baño para mascotas'
       },
       {
+        id: '3',
         img: 'assets/img/card-vacuna.png',
         name: 'Vacunación',
-        description: 'Vacunación preventiva para mascotas',
-        price: '35.00$'
+        price: '35.00$',
+        description: 'Vacunación preventiva para mascotas'
       },
       {
+        id: '4',
         img: 'assets/img/card-ducha.png',
         name: 'Baño general',
+        price: '30.00$',
         description: 'Baño y limpieza general para mascotas',
-        price: '30.00$'
       },
       {
+        id: '5',
         img: 'assets/img/card-pastillas.png',
         name: 'Desparasitación',
+        price: '20.00$',
         description: 'Tratamiento para eliminar parásitos internos y externos',
-        price: '20.00$'
       },
 
     ]
@@ -99,6 +112,7 @@ export default class ServiceComponent implements OnInit {
       this.currentPage++;
     }
   }
+
   /** Método para ir a una página anterior y mostrar servicios
    * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
@@ -107,5 +121,15 @@ export default class ServiceComponent implements OnInit {
     if (this.currentPage > 0) {
       this.currentPage--;
     }
+  }
+
+  /** Método para redirigir un empleado al agendamiento
+   * guardando el id del servicio seleccionado
+   * @author Meyer Usuga Restrepo <theagentsfrontend> 
+   */
+  goScheduleService(service: any){
+    let idService = service.id;
+    localStorage.setItem('idServicio', idService); 
+    this.router.navigate(['/schdule']);
   }
 }

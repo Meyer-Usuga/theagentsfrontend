@@ -1,1 +1,32 @@
-<p>schedule works!</p>
+@if(idService == null){
+<div class="alert alert-danger" role="alert">
+    No has seleccionado ningún servicio
+    <a href="#">Ir a seleccionar un servicio</a>
+</div>
+}
+<div class="container-fluid">
+    <div class="flex-container">
+        <section>
+            <div class="title">
+                <h1>Agenda</h1>
+            </div>
+            <div class="selected-services">
+                <h6>Fecha</h6>
+                <hr>
+                <p>• Nombre acudiente</p>
+                <p>• Nombre paciente</p>
+                <p>• Cantidad servicios</p>
+                <h6>Descripción</h6>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a dictum mauris. Praesent
+                    ullamcorper mollis lectus a viverra. Suspendisse egestas, purus consequat vehicula lobortis, massa
+                    enim faucibus arcu, tempor vestibulum ante tortor nec nunc. </p>
+            </div>
+            <button type="button" class="btn btn-send" (click)="scheduleService()">Agendar</button>
+        </section>
+        <div class="calendar">
+            <mat-card class="scheduling-calendar">
+                <mat-calendar></mat-calendar>
+            </mat-card>
+        </div>
+    </div>
+</div>

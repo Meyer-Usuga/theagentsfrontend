@@ -2,7 +2,7 @@
     <div class="flex-container">
         <section>
             <div class="title">
-                <h1>Elige un servicio</h1>
+                <h1>Servicios disponibles</h1>
             </div>
             <div class="services">
                 @for(service of getCurrentServices(); track service){
@@ -14,7 +14,7 @@
                         <strong><p>{{service.price}}</p></strong>
                     </mat-card-content>
                     <mat-card-actions>
-                        <button mat-raised-button color="accent">Seleccionar</button>
+                        <button mat-raised-button color="accent" (click)="goScheduleService(service)">Seleccionar</button>
                     </mat-card-actions>
                 </mat-card>
                 }

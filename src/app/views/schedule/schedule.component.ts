@@ -1,12 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { VeterinaryServicesService } from '../../services/veterinary-services.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-schedule',
   standalone: true,
-  imports: [],
+  imports: [MatDatepickerModule, MatCardModule],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
 export default class ScheduleComponent {
+
+  /** Inyección del servicio */
+  vetService = inject(VeterinaryServicesService)
+
+  public idService: any;
+  
+  constructor() {
+    this.idService = this.vetService.getIdService();
+  }
+
+  /** Método para agendar un servicio 
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+  */
+  scheduleService() {
+    if (this.idService != null) {
+      //lógica
+    }
+    else {
+      this.showAlert('warning', 'Debes seleccionar un servicio');
+    }
+  }
+
+  /** Método para mostrar un mensaje responsive
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+   */
+  showAlert(status: any, message: any) {
+    return Swal.fire({
+      title: 'Información',
+      text: message,
+      icon: status,
+      confirmButtonText: "Aceptar",
+      confirmButtonColor: "#5EA3FF"
+    })
+  }
 
 }
