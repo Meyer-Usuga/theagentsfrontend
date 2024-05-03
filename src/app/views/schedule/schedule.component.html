@@ -11,21 +11,29 @@
                 <h1>Agenda</h1>
             </div>
             <div class="selected-services">
-                <h6>Fecha</h6>
-                <hr>
-                <p>• Nombre acudiente</p>
-                <p>• Nombre paciente</p>
-                <p>• Cantidad servicios</p>
-                <h6>Descripción</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a dictum mauris. Praesent
-                    ullamcorper mollis lectus a viverra. Suspendisse egestas, purus consequat vehicula lobortis, massa
-                    enim faucibus arcu, tempor vestibulum ante tortor nec nunc. </p>
+                @if(idService == null){
+                    <p>No has seleccionado ningún servicio</p>
+                }@else {
+                    <h6>Fecha</h6>
+                    <hr>
+                    <p>• Nombre acudiente</p>
+                    <p>• Nombre paciente</p>
+                    <p>• Cantidad servicios</p>
+                    <h6>Descripción</h6>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a dictum mauris. Praesent
+                        ullamcorper mollis lectus a viverra. Suspendisse egestas, purus consequat vehicula lobortis, massa
+                        enim faucibus arcu, tempor vestibulum ante tortor nec nunc. </p>
+                }
             </div>
-            <button type="button" class="btn btn-send" (click)="scheduleService()">Agendar</button>
+            <div class="buttonsServices">
+                <button type="button" class="btn btn-send" (click)="scheduleService()">Agendar cita</button>
+                <button type="button" class="btn btn-delete">X</button>
+                <button type="button" class="btn btn-add"><i class="bi bi-pencil-fill"></i></button>
+            </div>
         </section>
         <div class="calendar">
             <mat-card class="scheduling-calendar">
-                <mat-calendar></mat-calendar>
+                <mat-calendar [(selected)]="dateSelected"></mat-calendar>
             </mat-card>
         </div>
     </div>

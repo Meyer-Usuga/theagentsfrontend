@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 /** Componentes de angular material */
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 /** Interfaz para almacenar las rutas */
 interface Components {
@@ -38,7 +38,7 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.getComponents();
     /** Este token debe ser generado desde el backend, o asignado desde el login */
-    this.token = '99DSAMXKAIUWJDSATTYYUXUAZ';
+    this.token = '';
     this.username = 'Meyer'
   }
 
@@ -48,6 +48,10 @@ export class ToolbarComponent implements OnInit {
   getComponents() {
 
     this.withoutLogin = [
+      {
+        name: 'Inicio',
+        redirection: 'home',
+      },
       {
         name: 'Iniciar sesión',
         redirection: 'login'
@@ -59,10 +63,6 @@ export class ToolbarComponent implements OnInit {
     ];
 
     this.loggedIn = [
-      {
-        name: 'Inicio',
-        redirection: 'home',
-      },
       {
         name: 'Servicios',
         redirection: 'veterinary-service'

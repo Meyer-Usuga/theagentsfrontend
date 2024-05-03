@@ -12,7 +12,7 @@ export class VeterinaryServicesService {
    * @author Meyer Usuga Restrepo <theagensfrontend>
    */
   getIdService() {
-    let idService = localStorage.getItem('idServicio');
-    return idService
+    let idService = localStorage.getItem('serviceSelected');
+    return idService;
   }
 }

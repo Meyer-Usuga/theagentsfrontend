@@ -4,8 +4,13 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'home',
         pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        title: 'Inicio',
+        loadComponent: () => import('./views/home/home.component')
     },
     {
         path: 'login',
@@ -23,13 +28,8 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'home',
+                redirectTo: 'schdule',
                 pathMatch: 'full'
-            },
-            {
-                path: 'home',
-                title: 'Inicio',
-                loadComponent: () => import('./views/home/home.component')
             },
             {
                 path: 'schdule',

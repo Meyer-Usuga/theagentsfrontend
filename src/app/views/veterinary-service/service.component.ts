@@ -129,7 +129,7 @@ export default class ServiceComponent implements OnInit {
    */
   goScheduleService(service: any){
     let idService = service.id;
-    localStorage.setItem('idServicio', idService); 
+    localStorage.setItem('serviceSelected', idService); 
     this.router.navigate(['/schdule']);
   }
 }

@@ -1,6 +1,5 @@
-
 /* Estilos del calendario */
-.scheduling-calendar{
+.scheduling-calendar {
     width: 700px;
     background-color: #dcdcf8;
     float: inline-end;
@@ -55,8 +54,12 @@ section {
     width: 45%;
 }
 
-/* Estilos del boton */
-.btn-send{
+.buttonsServices {
+    width: 40%;
+}
+
+/* Estilos de los botones */
+.btn-send {
     color: black;
     border: none;
     font-size: 17px;
@@ -64,6 +67,33 @@ section {
     background-color: #E6E57E;
 }
 
-.btn-send:hover{
+.btn-send:hover {
+    transform: scale(1.1);
+}
+
+.btn-add {
+    color: black;
+    border: none;
+    font-size: 17px;
+    float: inline-end;
+    border-radius: 10px;
+    background-color: #5ce1e6;
+}
+
+.btn-add:hover{
+    transform: scale(1.1);
+}
+
+.btn-delete {
+    color: black;
+    border: none;
+    margin-left: 5px;
+    font-size: 17px;
+    float: inline-end;
+    border-radius: 10px;
+    background-color: #e84331;
+}
+
+.btn-delete:hover {
     transform: scale(1.1);
 }

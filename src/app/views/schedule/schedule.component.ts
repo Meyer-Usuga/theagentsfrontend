@@ -16,8 +16,9 @@ import Swal from 'sweetalert2';
 export default class ScheduleComponent {
 
   /** Inyección del servicio */
-  vetService = inject(VeterinaryServicesService)
+  private vetService = inject(VeterinaryServicesService)
 
+  public dateSelected: Date | null | undefined;
   public idService: any;
   
   constructor() {
