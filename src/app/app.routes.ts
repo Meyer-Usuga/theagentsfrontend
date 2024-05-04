@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import NotfoundComponent from './views/notfound/notfound.component';
 
 /** Enrutamiento de los componentes  */
 export const routes: Routes = [
@@ -48,5 +49,6 @@ export const routes: Routes = [
             }
         ]
     },
-    { path: '**', title: 'Not found', loadComponent: () => import('./views/notfound/notfound.component') }
+    {path: '**', title: 'Not found ', component: NotfoundComponent},
+    { path: 'Not-Found', title: 'Not found', component: NotfoundComponent }
 ];

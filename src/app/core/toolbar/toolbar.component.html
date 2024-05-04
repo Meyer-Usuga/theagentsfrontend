@@ -2,25 +2,33 @@
     <span class="title">
         <mat-icon>pets</mat-icon><b>TheAgents</b>
     </span>
-    <div class="spacer"></div>
-    <div class="list-option">
-        @if(token != ''){
-          @for(element of loggedIn; track element){
-          <a mat-button class="btn-option" [routerLink]="'theagents/'+element.redirection">
-              {{element.name}}
-          </a>
-          }
-          <a mat-button class="btn-user-logged"><i class="bi bi-person-circle"></i> {{username}}</a>
-        }
-        @else {
-          @for(element of withoutLogin; track element){
-          <a mat-button class="btn-option" [routerLink]="element.redirection">
-              {{element.name}}
-          </a>
-          }
-        }
-
-    </div>
+    <!-- Si el empleado se logueo y tiene token de acceso -->
+    @if(token != null){
+        <a mat-button class="btn-user-logged"><i class="bi bi-person-circle"></i> {{username}}</a>
+        <div class="spacer"></div>
+        <div class="logout">
+            <button mat-button type="button" class="btn-logout" (click)="setLogout()">
+                <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+            </button>
+        </div>
+        <div class="list-option">
+            @for(element of loggedIn; track element){
+            <a mat-button class="btn-option" [routerLink]="'theagents/'+element.redirection">
+                {{element.name}}
+            </a>
+            }
+        </div>
+    }
+    @else {
+        <div class="spacer"></div>
+        <div class="list-option">
+            @for(element of withoutLogin; track element){
+            <a mat-button class="btn-option" [routerLink]="element.redirection">
+                {{element.name}}
+            </a>
+            }
+        </div>
+    }
 </mat-toolbar>
 <footer>
 </footer>

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 /** Componentes de angular material */
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginService } from '../../services/login.service';
 
 /** Interfaz para almacenar las rutas */
 interface Components {
@@ -16,6 +18,7 @@ interface Components {
   standalone: true,
   imports: [
     RouterLink,
+    CommonModule,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule
@@ -24,6 +27,9 @@ interface Components {
   styleUrl: './toolbar.component.css'
 })
 export class ToolbarComponent implements OnInit {
+
+  /** Inyección del servicio login */
+  loginService = inject(LoginService);
 
   public loggedIn: Components[] = [];
   public withoutLogin: Components[] = [];
@@ -37,8 +43,7 @@ export class ToolbarComponent implements OnInit {
   */
   ngOnInit(): void {
     this.getComponents();
-    /** Este token debe ser generado desde el backend, o asignado desde el login */
-    this.token = '';
+    this.token = this.loginService.getToken();
     this.username = 'Meyer'
   }
 
@@ -77,4 +82,14 @@ export class ToolbarComponent implements OnInit {
       },
     ];
   }
+
+ /** Método para cerrar sesión de un usuario  
+ * @author Meyer Usuga Restrepo <theagentsfrontend> 
+ */
+
+  setLogout() {
+    localStorage.removeItem('token');
+    this.token = '';
+  }
+
 }
