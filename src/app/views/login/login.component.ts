@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,9 @@ export default class LoginComponent implements OnInit {
 
   /** Inyección del servicio */
   loginService = inject(LoginService);
+
+  /** Inyección del router */
+  router = inject(Router);
 
   public token: any;
 
@@ -49,7 +52,8 @@ export default class LoginComponent implements OnInit {
       if (this.token) {
         localStorage.setItem('token', this.token);
       }
-      window.location.reload();
+      
+      this.router.navigate(['theagents/'])
     }
     else {
       window.alert('No se llenaron todos los campos');

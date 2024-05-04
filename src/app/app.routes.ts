@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import NotfoundComponent from './views/notfound/notfound.component';
+import { authGuard } from './guards/auth.guard';
 
 /** Enrutamiento de los componentes  */
 export const routes: Routes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
     {
         path: 'theagents',
         title: 'The Agents',
+        canActivate: [authGuard],
         children: [
             {
                 path: '',

@@ -90,6 +90,7 @@ export class ToolbarComponent implements OnInit {
   setLogout() {
     localStorage.removeItem('token');
     this.token = '';
+    window.location.reload();
   }
 
 }
