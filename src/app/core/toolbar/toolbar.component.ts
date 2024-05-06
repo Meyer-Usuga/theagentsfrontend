@@ -88,7 +88,7 @@ export class ToolbarComponent implements OnInit {
  */
 
   setLogout() {
-    localStorage.removeItem('token');
+    this.loginService.logoutUser();
     this.token = '';
     window.location.reload();
   }

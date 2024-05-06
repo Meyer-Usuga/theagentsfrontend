@@ -1,1 +1,59 @@
-<p>invoice works!</p>
+<div class="container">
+    <div class="flex-container">
+        <div class="invoice-container">
+            <img src="assets/img/moneda.png" id="icon-dolar">
+            <div class="title">
+                <h1>Factura</h1>
+                <h2>TheAgents®</h2>
+            </div>
+            <div class="pet-information">
+                <h6>Nombre acudiente</h6>
+                <p>Dirección</p>
+                <span style="display: flex;">
+                    <h6>Nombre Paciente</h6>
+                    <h6>Fecha asistencia</h6>
+                    <h6>Teléfono</h6>
+                    <h6>Correo electrónico</h6>
+                    <h6>N* de factura</h6>
+                </span>
+                <span style="display: flex;">
+                    <p>Raza</p>
+                    <p>Edad</p>
+                    <p>Sexo</p>
+                    <p>Peso</p>
+                </span>
+            </div>
+            <div class="full-services">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Tipo servicio</th>
+                            <th scope="col">Veterinario</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Precio unitario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lorem Ipsum</td>
+                            <td>Lorem Ipsum</td>
+                            <td>Lorem Ipsum</td>
+                            <td>Lorem Ipsum</td>
+                            <td>Lorem Ipsum</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="total-services" style="display: flex; justify-content: space-between;">
+                    <h6>TOTAL</h6>
+                    <p><strong>$55.000</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="generate-pdf">
+        <button mat-raised-button type="button" class="btn-download-pdf"><i
+                class="bi bi-file-earmark-pdf-fill"></i>Descargar PDF
+        </button>
+    </div>
+</div>

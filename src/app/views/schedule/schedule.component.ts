@@ -1,19 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { VeterinaryServicesService } from '../../services/veterinary-services.service';
+import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-schedule',
   standalone: true,
-  imports: [MatDatepickerModule, MatCardModule],
+  imports: [MatDatepickerModule, MatCardModule, RouterLink],
   providers: [provideNativeDateAdapter()],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
-export default class ScheduleComponent {
+export default class ScheduleComponent{
 
   /** Inyección del servicio */
   private vetService = inject(VeterinaryServicesService)
@@ -49,5 +50,6 @@ export default class ScheduleComponent {
       confirmButtonColor: "#5EA3FF"
     })
   }
+
 
 }

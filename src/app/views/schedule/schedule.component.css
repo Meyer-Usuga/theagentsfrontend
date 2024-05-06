@@ -97,3 +97,10 @@ section {
 .btn-delete:hover {
     transform: scale(1.1);
 }
+
+/* Alerta */
+
+.alert-danger{
+    font-size: 13px;
+    margin-top: 20px;
+}

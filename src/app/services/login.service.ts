@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,16 @@ export class LoginService {
 
   /** Método para hacer una petición al backend
  * para evaluar las credenciales del usuario
+ * 
  */
 
   loginUsuer() {
     return 1;
+  }
+
+  logoutUser(){
+    localStorage.removeItem('serviceSelected');
+    localStorage.removeItem('token');
   }
 
   /** Método para generar un token de acceso 

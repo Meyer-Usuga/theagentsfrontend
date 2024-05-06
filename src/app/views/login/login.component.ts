@@ -47,13 +47,13 @@ export default class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       
       //lógica para suscribirse al servicio de login
-
+      
       this.token = this.loginService.createToken();
       if (this.token) {
         localStorage.setItem('token', this.token);
       }
-      
-      this.router.navigate(['theagents/'])
+      //solucionar bug, que cuando loguea el toolobar no se actualiza
+      this.router.navigate(['theagents/']);
     }
     else {
       window.alert('No se llenaron todos los campos');
