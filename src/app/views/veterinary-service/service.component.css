@@ -5,14 +5,15 @@
     height: 100vh;
 }
 
-.title{
+.title {
     margin-bottom: 15px;
 }
 
-.title h1{
+.title h1 {
     font-weight: bold;
     font-size: 65px;
 }
+
 .services {
     display: flex;
     justify-content: center;
@@ -32,12 +33,12 @@
     width: 50%;
 }
 
-.card:hover{
+.card:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
 
-#btn-back{
+#btn-back {
     border: none;
     font-size: 24px;
     float: inline-start;
@@ -45,12 +46,12 @@
     background-color: transparent !important;
 }
 
-#btn-back:hover{
+#btn-back:hover {
     font-size: 27px;
     color: brown;
 }
 
-#btn-next{
+#btn-next {
     border: none;
     font-size: 24px;
     float: inline-end;
@@ -58,7 +59,21 @@
     background-color: transparent !important;
 }
 
-#btn-next:hover{
+#btn-next:hover {
     font-size: 27px;
     color: brown;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
 }
