@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 /** Componentes de angular material */
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { VeterinaryServicesService } from '../../services/veterinary-services.service';
+import { Service } from '../../models/service';
 
 /** Interfaz para los servicios de veterinaria */
 interface typeService {
@@ -23,14 +25,16 @@ interface typeService {
 })
 export default class ServiceComponent implements OnInit {
 
-  /** Inyectamos el router para manipuar la url */
+  /** Inyectamos servicios */
+  private vetServices = inject(VeterinaryServicesService);
   router = inject(Router);
 
   public listServices: typeService[] = [];
-  
+  public services: Service[] = [];
+
   /** Variables para controlar el carousel */
-  currentPage = 0; //tarjetas actuales
-  servicesPerPage = 3; //servicios por página
+  public currentPage = 0; //tarjetas actuales
+  public servicesPerPage = 3; //servicios por página
 
   constructor() {
   }
@@ -39,6 +43,19 @@ export default class ServiceComponent implements OnInit {
   */
   ngOnInit(): void {
     this.loadServices();
+    this.getServices();
+  }
+
+  getServices(){
+    this.vetServices.getServices().subscribe({
+      next: (data: Service[]) => {
+        this.services = data; 
+        console.log(this.services); 
+      },
+      error: error =>{
+        console.log(<any>error);
+      }
+    })
   }
 
   /** Método para cargar los servicios disponibles
