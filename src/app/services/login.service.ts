@@ -1,12 +1,21 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../models/user';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { api } from '../settings/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor() { }
+  private http = inject(HttpClient);
+  public apiUrl: any;
+
+
+  constructor() {
+    this.apiUrl = api.url + "Usuarios/";
+  }
 
   /** Método para generar un token de acceso 
   * @author Meyer Usuga Restrepo <theagensfrontend>
@@ -37,8 +46,15 @@ export class LoginService {
   *  @author Meyer Usuga Restrepo <theagentsfrontend>
   */
 
-  loginUsuer() {
-    return 1;
+  loginUsuer(user: User[]): Observable<any> {
+
+    /** Definimos los parametros  */
+    let params = new HttpParams()
+      .set('usuario', user[0].username)
+      .set('clave', user[0].password);
+
+    /** Enviamos la petición */
+    return this.http.post<any>(this.apiUrl + 'login', {}, { params: params });
   }
 
   /** Método  para cerrar sesión de un empleado

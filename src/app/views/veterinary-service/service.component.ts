@@ -46,18 +46,6 @@ export default class ServiceComponent implements OnInit {
     this.getServices();
   }
 
-  getServices(){
-    this.vetServices.getServices().subscribe({
-      next: (data: Service[]) => {
-        this.services = data; 
-        console.log(this.services); 
-      },
-      error: error =>{
-        console.log(<any>error);
-      }
-    })
-  }
-
   /** Método para cargar los servicios disponibles
    * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
@@ -100,6 +88,22 @@ export default class ServiceComponent implements OnInit {
       },
 
     ]
+  }
+
+  /** Método que obtiene todos los servicios
+   *  registrados desde el backend
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+   */
+  getServices(){
+    this.vetServices.getServices().subscribe({
+      next: (data: Service[]) => {
+        this.services = data; 
+        console.log(this.services); 
+      },
+      error: error =>{
+        console.log(<any>error);
+      }
+    })
   }
 
   /** Método para mostrar 3 servicios por página del carousel

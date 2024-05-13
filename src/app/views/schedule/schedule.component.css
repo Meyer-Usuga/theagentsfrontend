@@ -54,6 +54,12 @@ section {
     width: 45%;
 }
 
+.buttonsProducts {
+
+    width: 40%;
+    margin-bottom: 10px;
+}
+
 .buttonsServices {
     width: 40%;
 }

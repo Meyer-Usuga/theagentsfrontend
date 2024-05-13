@@ -9,5 +9,15 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './invoice.component.css'
 })
 export default class InvoiceComponent {
+  constructor() { }
 
+
+  /** Método para generar una ventana de impresión/pdf
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+   * @author Diego Alexander Valencia <theagentsfrontend>
+   */
+
+  downloadPDF() {
+    window.print();
+  }
 }

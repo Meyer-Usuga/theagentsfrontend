@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,10 @@ export default class LoginComponent implements OnInit {
 
   /** Formulario */
   loginForm!: FormGroup;
+
+  /** Modelo usuario */
+
+  public user: User[] = [];
 
   /** formBuilder nos permite construir un formulario reactivo */
   constructor(private formBuilder: FormBuilder) {
@@ -47,17 +52,34 @@ export default class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
+      /** Obtenemos los datos */
+      this.user = [
+        {
+          username: this.loginForm.get('username')?.value,
+          password: this.loginForm.get('password')?.value
+        }
+      ];
+      /** Usamos el servicio del login */
+      this.loginService.loginUsuer(this.user).subscribe({
+        next: response => {
+          if (response.message == 'Inicio de sesión exitoso') {
 
-      //lógica para suscribirse al servicio de login
+            //generamos un token y guardamos
+            this.token = this.loginService.createToken();
+            localStorage.setItem('token', this.token);
 
-      //si la respuesta del back fue positiva
-      this.token = this.loginService.createToken();
-      if (this.token) {
-        localStorage.setItem('token', this.token);
-      }
-      //si todo esta bien, redirigimos 
-      const urlTree = this.router.createUrlTree(['theagents/']);
-      window.location.href = this.router.serializeUrl(urlTree);
+            //llevamos al inicio
+            const urlTree = this.router.createUrlTree(['theagents/']);
+            window.location.href = this.router.serializeUrl(urlTree);
+          }
+        },
+        error: error => {
+          console.log(<any>error);
+          if (error.status == 401) {
+            window.alert('Credenciales inválidas');
+          }
+        }
+      })
     }
     else {
       window.alert('No se llenaron todos los campos');
