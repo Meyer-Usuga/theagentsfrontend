@@ -4,7 +4,10 @@
     </span>
     <!-- Si el empleado se logueo y tiene token de acceso -->
     @if(token != null){
-        <a mat-button class="btn-user-logged"><i class="bi bi-person-circle"></i> {{username}}</a>
+        <a mat-button class="btn-user-logged" [routerLink]="'theagents/'+ 'profile'">
+            <i class="bi bi-person-circle"></i> 
+            {{username}}
+        </a>
         <div class="spacer"></div>
         <div class="logout">
             <button mat-button type="button" class="btn-logout" (click)="setLogout()">

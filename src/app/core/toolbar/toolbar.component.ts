@@ -34,6 +34,7 @@ export class ToolbarComponent implements OnInit {
   public loggedIn: Components[] = [];
   public withoutLogin: Components[] = [];
   public token: any;
+  public userLogin: any; 
   public username: any;
 
   constructor() { }
@@ -44,7 +45,7 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.getComponents();
     this.token = this.loginService.getToken();
-    this.username = 'Meyer'
+    this.username = this.loginService.getUser();
   }
 
   /** Método que lista el nombre y el acceso a los componentes

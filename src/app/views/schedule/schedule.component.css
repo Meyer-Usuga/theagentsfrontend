@@ -48,16 +48,23 @@ section {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.products-aggrates{
+    display: flex;
+    align-items: center;
+}
+
+
 /* Estilos del banner */
 .calendar {
     padding: 0;
-    width: 45%;
+    position: relative;
+    font-size: 11px;
 }
 
 .buttonsProducts {
 
     width: 40%;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .buttonsServices {
@@ -66,6 +73,14 @@ section {
 
 /* Estilos de los botones */
 .btn-send {
+    color: black;
+    border: none;
+    font-size: 17px;
+    border-radius: 10px;
+    background-color: #E6E57E;
+}
+
+.btn-product {
     color: black;
     border: none;
     font-size: 17px;
@@ -100,16 +115,30 @@ section {
     background-color: #e84331;
 }
 
+.btn-delete-product{
+    color: black;
+    background-color: transparent !important;
+}
+
 .btn-delete:hover {
     transform: scale(1.1);
 }
 
-/* Alerta */
+/* Alertas */
 
 .alert-danger {
     font-size: 13px;
     margin-top: 20px;
     margin: 15px;
+}
+
+.alert-primary{
+    font-size: 13px;
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    background-color: transparent !important;
 }
 
 /* aparicion */

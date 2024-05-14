@@ -64,9 +64,10 @@ export default class LoginComponent implements OnInit {
         next: response => {
           if (response.message == 'Inicio de sesión exitoso') {
 
-            //generamos un token y guardamos
+            //generamos un token y guardamos datos
             this.token = this.loginService.createToken();
             localStorage.setItem('token', this.token);
+            localStorage.setItem('userlogin', this.user[0].username);
 
             //llevamos al inicio
             const urlTree = this.router.createUrlTree(['theagents/']);

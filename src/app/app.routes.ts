@@ -35,6 +35,11 @@ export const routes: Routes = [
                 pathMatch: 'full'
             },
             {
+                path: 'profile',
+                title: 'Perfil',
+                loadComponent: () => import('./views/settings-profile/settings-profile.component')
+            },
+            {
                 path: 'schdule',
                 title: 'Agendar',
                 loadComponent: () => import('./views/schedule/schedule.component')

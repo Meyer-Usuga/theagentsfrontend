@@ -41,6 +41,17 @@ export class LoginService {
     return token;
   }
 
+  /** Método para obtener el usuario logueado 
+   * @author Meyer Usuga Restrepo <theagensfrontend>
+  */
+
+  getUser(){
+    let user = null;
+    user = localStorage.getItem('userlogin');
+
+    return user; 
+  }
+
   /** Método para hacer una petición al backend
   * para evaluar las credenciales del usuario
   *  @author Meyer Usuga Restrepo <theagentsfrontend>
