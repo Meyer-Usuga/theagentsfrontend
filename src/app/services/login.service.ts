@@ -53,16 +53,16 @@ export class LoginService {
   }
 
   /** Método para hacer una petición al backend
-  * para evaluar las credenciales del usuario
+  * y evaluar las credenciales del usuario
   *  @author Meyer Usuga Restrepo <theagentsfrontend>
   */
 
-  loginUsuer(user: User[]): Observable<any> {
+  loginUsuer(username: any, password: any): Observable<any> {
 
-    /** Definimos los parametros  */
+    /** Definimos los parametros con los datos */
     let params = new HttpParams()
-      .set('usuario', user[0].username)
-      .set('clave', user[0].password);
+      .set('usuario', username)
+      .set('clave', password);
 
     /** Enviamos la petición */
     return this.http.post<any>(this.apiUrl + 'login', {}, { params: params });
@@ -73,8 +73,9 @@ export class LoginService {
   */
 
   logoutUser() {
-    localStorage.removeItem('serviceSelected');
     localStorage.removeItem('token');
+    localStorage.removeItem('userlogin');
+    localStorage.removeItem('serviceSelected');
   }
 
 }

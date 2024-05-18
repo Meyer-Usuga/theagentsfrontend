@@ -14,20 +14,14 @@ import { User } from '../../models/user';
 })
 export default class LoginComponent implements OnInit {
 
-  /** Inyección del servicio */
+  /** Inyección de servicios */
   loginService = inject(LoginService);
-
-  /** Inyección del router */
   router = inject(Router);
 
   public token: any;
 
   /** Formulario */
   loginForm!: FormGroup;
-
-  /** Modelo usuario */
-
-  public user: User[] = [];
 
   /** formBuilder nos permite construir un formulario reactivo */
   constructor(private formBuilder: FormBuilder) {
@@ -52,22 +46,20 @@ export default class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      /** Obtenemos los datos */
-      this.user = [
-        {
-          username: this.loginForm.get('username')?.value,
-          password: this.loginForm.get('password')?.value
-        }
-      ];
-      /** Usamos el servicio del login */
-      this.loginService.loginUsuer(this.user).subscribe({
+
+      /** Obtenemos los datos del formulario  */
+      let username = this.loginForm.get('username')?.value; 
+      let password = this.loginForm.get('password')?.value; 
+
+      /** Usamos el servicio del login enviando los datos */
+      this.loginService.loginUsuer(username, password).subscribe({
         next: response => {
           if (response.message == 'Inicio de sesión exitoso') {
 
             //generamos un token y guardamos datos
             this.token = this.loginService.createToken();
             localStorage.setItem('token', this.token);
-            localStorage.setItem('userlogin', this.user[0].username);
+            localStorage.setItem('userlogin',username);
 
             //llevamos al inicio
             const urlTree = this.router.createUrlTree(['theagents/']);

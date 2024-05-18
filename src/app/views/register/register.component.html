@@ -1,25 +1,31 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <div class="title">
                     <h1>Regístrate</h1>
                 </div>
                 <div class="mb-3">
-                    <input class="form-control d-inline-block mr-2" type="text" id="txtName" placeholder="Nombre">
-                    <input class="form-control d-inline-block" type="text" id="txtUser" placeholder="Nickname">
+                    <input class="form-control d-inline-block mr-2" type="text" id="txtName" 
+                    formControlName="name" placeholder="Nombre" [(ngModel)]="user.nombre">
+                    <input class="form-control d-inline-block" type="text" id="txtUser" 
+                    formControlName="username" placeholder="Nickname" [(ngModel)]="user.user">
                 </div>
                 <div class="mb-3">
                     <input class="form-control d-inline-block mr-2" type="number" id="txtDocument"
-                        placeholder="Documento">
-                    <input class="form-control d-inline-block" type="number" id="txtNumber" placeholder="Teléfono">
+                    formControlName="id" placeholder="Documento" [(ngModel)]="user.id">
+                    <input class="form-control d-inline-block" type="number" id="txtNumber" 
+                    formControlName="phone" placeholder="Teléfono" [(ngModel)]="user.telefono">
                 </div>
                 <div class="mb-3">
-                    <input class="form-control d-inline-block mr-2" type="email" id="txtEmail" placeholder="Correo">
-                    <input class="form-control d-inline-block" type="password" id="txtPassword" placeholder="Clave">
+                    <input class="form-control d-inline-block mr-2" type="email" id="txtEmail" 
+                    formControlName="email" placeholder="Correo" [(ngModel)]="user.correo">
+                    <input class="form-control d-inline-block" type="password" id="txtPassword" 
+                    formControlName="password" placeholder="Clave" [(ngModel)]="user.clave">
                 </div>
                 <div class="mb-3">
-                    <input class="form-control d-inline-block mb-4" type="number" id="txtAge" placeholder="Edad">
+                    <input class="form-control d-inline-block mb-4" type="number" id="txtAge" 
+                    formControlName="age" placeholder="Edad">
                     <select class="form-select d-inline-block" aria-label="Select charge" aria-placeholder="Cargo">
                         <option disabled selected value="">Cargo</option>
                         <option value="">Acudiente</option>
@@ -30,19 +36,21 @@
                 </div>
                 <div class="mb-3 form-check">
                     <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" id="cbFemale">
+                        <input type="checkbox" class="form-check-input" id="cbFemale" 
+                        formControlName="sex" (change)="defineSex()" value="M">
                         <label class="form-check-label" for="cbFemale">Mujer</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" id="cbMale">
+                        <input type="checkbox" class="form-check-input" id="cbMale" 
+                        formControlName="sex" (change)="defineSex()" value="H">
                         <label class="form-check-label" for="cbMale">Hombre</label>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Crear usuario</button>
-                <div class="form-text" id="login-redirection">
-                    ¿Ya tienes una cuenta? <a [routerLink]="'/login'">Inicia sesión</a>
-                </div>
             </form>
+            <div class="form-text" id="login-redirection">
+                ¿Ya tienes una cuenta? <a [routerLink]="'/login'">Inicia sesión</a>
+            </div>
         </div>
     </div>
 </div>
