@@ -60,6 +60,7 @@ export default class LoginComponent implements OnInit {
             this.token = this.loginService.createToken();
             localStorage.setItem('token', this.token);
             localStorage.setItem('userlogin',username);
+            localStorage.setItem('userProfile','Gerente'); 
 
             //llevamos al inicio
             const urlTree = this.router.createUrlTree(['theagents/']);

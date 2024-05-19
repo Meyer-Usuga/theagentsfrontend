@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2'; 
 import { Product } from '../../models/product';
 import { FormsModule } from '@angular/forms';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-schedule',
@@ -16,46 +17,26 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
-export default class ScheduleComponent {
+export default class ScheduleComponent implements OnInit{
 
-  /** Inyección del servicio */
-  private vetService = inject(VeterinaryServicesService)
+  /** Inyección de servicios */
+  private vetService = inject(VeterinaryServicesService);
+  private productsService = inject(ProductsService);
 
   public dateSelected: Date | null | undefined;
   public idService: any;
 
   /** Lista de productos */
   public product: any; 
-  public products: Product[] = [];
+  public listProducts: Product[] = [];
   public selectedProducts: any[] = []; 
 
   constructor() {
     this.idService = this.vetService.getIdService();
-    this.products = [
-      {
-        id: 1, 
-        name: "Shampoo", 
-        price: 17500,  
-        cantUse: 1,  
-        description: "Pelaje suave y fresco para tus mascotas" 
-      },
-      {
-        id: 2, 
-        name: "Wizka", 
-        price: 3500,  
-        cantUse: 1,  
-        description: "Comida para gatos sabor carne" 
-      },
-      {
-        id: 3, 
-        name: "Hueso", 
-        price: 5500,  
-        cantUse: 1,  
-        description: "Hueso para perros" 
-      }
-    ]
+  }
 
-    this.product = "s";
+  ngOnInit(): void {
+      this.getAllProducts();
   }
 
   /** Método para agendar un servicio 
@@ -71,9 +52,17 @@ export default class ScheduleComponent {
   }
 
 
-
-  getProducts(){
-
+  /** Método que nos permite listar todos los productos */
+  getAllProducts(){
+    this.productsService.getProducts().subscribe({
+      next: (data: Product[]) =>{
+        this.listProducts = data; 
+        console.log(this.listProducts);
+      },
+      error: error =>{
+        console.log(<any>error);
+      }
+    })
   }
 
   /** Método para seleccionar productos 
@@ -85,7 +74,7 @@ export default class ScheduleComponent {
     
   }
 
-  /** Método para eliminar un producto 
+  /** Método para eliminar un producto seleccionado
    * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
 

@@ -32,8 +32,8 @@
                         <button type="button" class="btn btn-delete" data-bs-toggle="modal"
                             data-bs-target="#deleteModal" (click)="selectUser(user)">X
                         </button>
-                        <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#editModal"><i
-                                class="bi bi-pencil-fill" (click)="selectUser(user)"></i></button>
+                        <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#editModal"
+                            (click)="selectUser(user)"><i class="bi bi-pencil-fill"></i></button>
                     </span>
                     }
                 </div>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="modal-body">
                         @if(detailsUser){
-                        <label>ID</label>
+                        <label><b>ID</b></label>
                         <input type="text" class="form-control mb-3" value="{{detailsUser.id}}" disabled>
                         <label><b>Nombre</b></label>
                         <input type="text" class="form-control mb-3" value="{{detailsUser.nombre}}"

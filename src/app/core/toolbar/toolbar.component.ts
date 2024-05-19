@@ -34,7 +34,8 @@ export class ToolbarComponent implements OnInit {
   public loggedIn: Components[] = [];
   public withoutLogin: Components[] = [];
   public token: any;
-  public userLogin: any; 
+  public userLogin: any;
+  public userProfile: any;  
   public username: any;
 
   constructor() { }
@@ -46,6 +47,7 @@ export class ToolbarComponent implements OnInit {
     this.getComponents();
     this.token = this.loginService.getToken();
     this.username = this.loginService.getUser();
+    this.userProfile = this.loginService.getProfile();
   }
 
   /** Método que lista el nombre y el acceso a los componentes
@@ -78,8 +80,8 @@ export class ToolbarComponent implements OnInit {
         redirection: 'schdule'
       },
       {
-        name: 'Factura',
-        redirection: 'invoice'
+        name: 'Perfiles',
+        redirection: 'settings-profile'
       },
     ];
   }

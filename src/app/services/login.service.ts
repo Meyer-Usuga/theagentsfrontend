@@ -52,6 +52,13 @@ export class LoginService {
     return user; 
   }
 
+  getProfile(){
+    let profile = null;
+    profile = localStorage.getItem('userProfile');
+    
+    return profile; 
+  }
+
   /** Método para hacer una petición al backend
   * y evaluar las credenciales del usuario
   *  @author Meyer Usuga Restrepo <theagentsfrontend>

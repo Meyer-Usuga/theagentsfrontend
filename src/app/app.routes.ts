@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import NotfoundComponent from './views/notfound/notfound.component';
-import { authGuard } from './guards/auth.guard';
+import { authGuard, profileGuard } from './guards/auth.guard';
 
 /** Enrutamiento de los componentes  */
 export const routes: Routes = [
@@ -35,8 +35,9 @@ export const routes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'profile',
+                path: 'settings-profile',
                 title: 'Perfil',
+                canActivate: [profileGuard],
                 loadComponent: () => import('./views/settings-profile/settings-profile.component')
             },
             {

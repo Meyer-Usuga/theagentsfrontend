@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 import { User } from '../../models/user';
 import { LoginService } from '../../services/login.service';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-settings-profile',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,MatPaginatorModule],
   templateUrl: './settings-profile.component.html',
   styleUrl: './settings-profile.component.css'
 })
@@ -21,7 +22,7 @@ export default class SettingsProfileComponent implements OnInit {
   public listUsers: User[] = [];
   /** Usuario logueado */
   public userLogin: any;
-  public modal!: string; 
+  /** Usuario a editar o eliminar */
   public detailsUser!: User; 
 
   constructor() { }
@@ -41,7 +42,6 @@ export default class SettingsProfileComponent implements OnInit {
 
   selectUser(user:User){
     this.detailsUser = user; 
-    console.log(this.detailsUser);
   }
 
   /** Método que nos lista todos los usuarios en bd 
@@ -69,7 +69,6 @@ export default class SettingsProfileComponent implements OnInit {
 
   deleteUser(user: User) {
     /** Validamos que no se elimine el usuario que esta logueado */
-    if (this.userLogin !== user.user) {
       /** Hacemos la petición mediante el servicio */
       this.profilesService.deleteUser(user.id).subscribe({
         next: response => {
@@ -81,10 +80,7 @@ export default class SettingsProfileComponent implements OnInit {
           console.log(<any>error);
         }
       })
-    }
-    else {
-      window.alert('No puedes eliminarte a ti mismo mientras estés logueado!');
-    }
+
 
   }
 

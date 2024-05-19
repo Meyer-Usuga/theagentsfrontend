@@ -23,3 +23,20 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false
   }
 };
+
+export const profileGuard: CanActivateFn = (route, state) => {
+
+  /** Inyectamos el servicio de login */
+  const loginService = inject(LoginService);
+
+  /** Inyectamos el router */
+  const router = inject(Router);
+
+  if (loginService.getProfile() === 'Gerente') {
+    return true
+  }
+  else {
+    router.navigate(['theagents/']);
+    return false
+  }
+};

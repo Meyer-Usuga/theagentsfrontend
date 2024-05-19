@@ -47,7 +47,7 @@
     </div>
     <div class="products-container">
         <!-- Modal para seleccionar productos-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -66,12 +66,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for(product of products; track product){
+                                @for(product of listProducts; track product){
                                 <tr style="text-align: center;">
                                     <th scope="row">{{product.id}}</th>
-                                    <td>{{product.name}}</td>
-                                    <td>{{product.description}}</td>
-                                    <td>{{product.price}}$</td>
+                                    <td>{{product.nombre}}</td>
+                                    <td>{{product.descripcion}}</td>
+                                    <td>{{product.precio}}$</td>
                                     <td>
                                         <button type="button" class="btn btn-product" (click)="selectProducts(product)">
                                             <i class="bi bi-cart-plus-fill"></i>
@@ -91,8 +91,8 @@
                                 @for(product of selectedProducts; track product){
                                 <div class="products-aggrates">
                                     <div class="alert alert-primary">
-                                        {{product.name}}
-                                         ${{product.price}}
+                                        {{product.nombre}}
+                                         ${{product.precio}}
                                     </div>
                                     <button type="button" class="btn btn-delete-product" (click)="deleteProductSelected(product)">
                                         <i class="bi bi-trash"></i>
