@@ -1,1 +1,99 @@
-<p>settings-profile works!</p>
+<div class="container fade-in">
+    <div class="flex-container">
+        <div class="settings-container">
+            <div class="title">
+                <h1>Perfiles</h1>
+            </div>
+            <div class="edit-users-container">
+                <div class="managers-container">
+                    <h3 class="title">Gerentes</h3>
+                    <span class="items">
+                        <i class="bi bi-person-circle icon-profile"></i>
+                        <input type="text" value="Nombre" class="form-control d-inline-block mr-2">
+                        <button type="button" class="btn btn-delete">X</button>
+                        <button type="button" class="btn btn-add"><i class="bi bi-pencil-fill"></i></button>
+                    </span>
+                </div>
+                <div class="employees-container">
+                    <h3 class="title">Empleados</h3>
+                    <span class="items">
+                        <i class="bi bi-person-circle icon-profile"></i>
+                        <input type="text" value="Nombre" class="form-control d-inline-block mr-2">
+                        <button type="button" class="btn btn-delete">X</button>
+                        <button type="button" class="btn btn-add"><i class="bi bi-pencil-fill"></i></button>
+                    </span>
+                </div>
+                <div class="employees-container">
+                    <h3 class="title">Usuarios</h3>
+                    @for(user of listUsers; track user){
+                    <span class="items">
+                        <i class="bi bi-person-circle icon-profile"></i>
+                        <input type="text" value="{{user.nombre}}" class="form-control d-inline-block mr-2" disabled>
+                        <button type="button" class="btn btn-delete" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal" (click)="selectUser(user)">X
+                        </button>
+                        <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#editModal"><i
+                                class="bi bi-pencil-fill" (click)="selectUser(user)"></i></button>
+                    </span>
+                    }
+                </div>
+            </div>
+        </div>
+        <!--Modales eliminar-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if(detailsUser){
+                        ¿Deseas eliminar el usuario <strong>{{detailsUser.nombre}}</strong> ?
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" (click)="deleteUser(detailsUser)">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal editar-->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if(detailsUser){
+                        <label>ID</label>
+                        <input type="text" class="form-control mb-3" value="{{detailsUser.id}}" disabled>
+                        <label><b>Nombre</b></label>
+                        <input type="text" class="form-control mb-3" value="{{detailsUser.nombre}}"
+                            [(ngModel)]="detailsUser.nombre">
+                        <label><b>Teléfono</b></label>
+                        <input type="number" class="form-control mb-3" value="{{detailsUser.telefono}}"
+                            [(ngModel)]="detailsUser.telefono">
+                        <label><b>Correo</b></label>
+                        <input type="email" class="form-control mb-3" value="{{detailsUser.correo}}"
+                            [(ngModel)]="detailsUser.correo">
+                        <label><b>Clave</b></label>
+                        <input type="text" class="form-control mb-3" value="{{detailsUser.clave}}"
+                            [(ngModel)]="detailsUser.clave">
+                        <label><b>Edad</b></label>
+                        <input type="number" class="form-control mb-3" value="{{detailsUser.edad}}"
+                            [(ngModel)]="detailsUser.edad">
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" (click)="updateUser(detailsUser)">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

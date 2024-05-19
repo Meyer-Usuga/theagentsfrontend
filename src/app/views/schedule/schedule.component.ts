@@ -66,7 +66,7 @@ export default class ScheduleComponent {
       //lógica
     }
     else {
-      this.showAlert('warning', 'Debes seleccionar un servicio');
+      this.showAlert('warning', 'Debes seleccionar un servicio antes de agendar');
     }
   }
 

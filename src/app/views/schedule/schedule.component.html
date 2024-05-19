@@ -55,10 +55,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h4 style="text-align: center; font-weight: bold;">LISTA DE PRODUCTOS</h4>
-                        <br>
                         <table class="table table-striped table-bordered">
-                            <thead>
+                            <thead style="background-color: #E6E57E;">
                                 <tr style="text-align: center;">
                                     <th scope="col">Id</th>
                                     <th scope="col">Producto</th>
@@ -73,7 +71,7 @@
                                     <th scope="row">{{product.id}}</th>
                                     <td>{{product.name}}</td>
                                     <td>{{product.description}}</td>
-                                    <td>{{product.price}}</td>
+                                    <td>{{product.price}}$</td>
                                     <td>
                                         <button type="button" class="btn btn-product" (click)="selectProducts(product)">
                                             <i class="bi bi-cart-plus-fill"></i>
@@ -99,9 +97,9 @@
                                     <button type="button" class="btn btn-delete-product" (click)="deleteProductSelected(product)">
                                         <i class="bi bi-trash"></i>
                                     </button>
+                                    <br>
                                 </div>
                                 }
-                                <br>
                             }
                         </div>
                     </div>

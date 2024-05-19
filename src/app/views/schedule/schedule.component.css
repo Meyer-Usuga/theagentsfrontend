@@ -136,9 +136,11 @@ section {
     font-size: 13px;
     padding: 10px;
     margin: 0;
-    width: 100%;
+    width: 88%;
     text-align: center;
-    background-color: transparent !important;
+    color: black;
+    font-weight: bold;
+    background-color: #E6E57E;
 }
 
 /* aparicion */
