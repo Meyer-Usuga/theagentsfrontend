@@ -55,36 +55,43 @@ export default class ServiceComponent implements OnInit {
         id: '1',
         img: 'assets/img/card-consulta.png',
         name: 'Consulta',
-        price: '50.00$',
+        price: '50000',
         description: 'Consulta veterinaria estándar'
       },
       {
         id: '2',
         img: 'assets/img/card-peluqueria.png',
         name: 'Peluqueria',
-        price: '40.00$',
+        price: '40000',
         description: 'Corte de pelo y baño para mascotas'
       },
       {
         id: '3',
         img: 'assets/img/card-ducha.png',
         name: 'Baño general',
-        price: '30.00$',
+        price: '30000',
         description: 'Baño y limpieza general para mascotas',
       },
       {
         id: '4',
         img: 'assets/img/card-pastillas.png',
         name: 'Desparasitación',
-        price: '20.00$',
+        price: '20000',
         description: 'Tratamiento para eliminar parásitos internos y externos',
       },
       {
         id: '5',
         img: 'assets/img/card-vacuna.png',
         name: 'Vacunación',
-        price: '35.00$',
+        price: '35000',
         description: 'Vacunación preventiva para mascotas'
+      },
+      {
+        id: '6',
+        img: 'assets/img/card-odontologia.png',
+        name: 'Odontología',
+        price: '55000',
+        description: 'Limpieza deltal o extracción de dientes.'
       },
 
     ]
@@ -144,12 +151,12 @@ export default class ServiceComponent implements OnInit {
   }
 
   /** Método para redirigir un empleado al agendamiento
-   * guardando el id del servicio seleccionado
+   * guardando datos del servicio seleccionado
    * @author Meyer Usuga Restrepo <theagentsfrontend> 
    */
   goScheduleService(service: any){
-    let idService = service.id;
-    localStorage.setItem('serviceSelected', idService); 
+    /** guardamos el servicio y redirigimos */
+    localStorage.setItem('service', JSON.stringify(service));
     this.router.navigate(['/theagents/schdule/']);
   }
 }

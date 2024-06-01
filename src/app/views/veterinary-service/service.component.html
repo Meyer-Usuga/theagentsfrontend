@@ -7,11 +7,11 @@
             <div class="services">
                 @for(service of getCurrentServices(); track service){
                 <mat-card class="card">
-                    <img mat-card-image src="{{service.img}}" alt="Foto vacuna">
+                    <img mat-card-image src="{{service.img}}" alt="Foto-service">
                     <mat-card-content>
                         <h4>{{service.name}}</h4>
                         <p>{{service.description}}</p>
-                        <strong><p>{{service.price}}</p></strong>
+                        <strong><p>{{service.price}}$</p></strong>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-raised-button color="accent" (click)="goScheduleService(service)">Seleccionar</button>

@@ -3,212 +3,266 @@
         <div class="flex-container">
             <section class="container">
                 <div class="title">
-                    <h1>Agendar una cita</h1>
+                    <h1>¿Qué cita tenemoshoy? :)</h1>
                 </div>
                 <div class="schedule-service">
-                    @if(idServiceSelected == null){
-                    <div class="alert alertService">
-                        <p>No se ha seleccionado ningún tipo de servicio.</p>
-                        <a [routerLink]="['/theagents/veterinary-service']">
-                            <input type="button" class="btn btn-schedule" value="Buscar servicios">
-                        </a>
-                    </div>
-                    }@else {
-                        @if(serviceSelected){
-                            <div class="alert alertService">
-                                <p>Has seleccionado el servicio: <b>{{serviceSelected.descripcion}}</b></p>
-                                <button type="button" class="btn btn-schedule" data-bs-toggle="modal" data-bs-target="#exampleModal3"
-                                (click)="getSchedule()">
-                                    Agendar el servicio
-                                </button>
-                                <button type="button" class="btn btn-remove" (click)="deleteServiceSelected()" [disabled]="!serviceSelected">
-                                    Deseleccionar servicio
-                                </button>
+                    <mat-tab-group>
+                        <!--Pestaña para la tabla de agendamiento-->
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>perm_contact_calendar</mat-icon> Agendar
+                            </ng-template>
+                            <div class="container">
+                                @if(selectedService == null){
+                                    <div class="alert alertService">
+                                        <p>No se ha seleccionado ningún tipo de servicio.</p>
+                                        <a [routerLink]="['/theagents/veterinary-service']">
+                                            <input type="button" class="btn btn-schedule" value="Buscar servicios">
+                                        </a>
+                                    </div>
+                                    }@else {
+                                        @if(selectedService){
+                                            <div class="alert alertService mat-elevation-z8">
+                                                <p>Has seleccionado el servicio: <b>{{selectedService.name}}</b></p>
+                                                <form #ngForm="ngForm" (ngSubmit)="setSchedule(ngForm)">
+                                                    @if(service) {
+                                                      <div class="row">
+                                                        <div class="col-md-4">
+                                                          <div class="form-group">
+                                                            <label for="typeService"><b>Tipo</b></label>
+                                                            <input type="text" class="form-control" name="typeService" id="typeService"
+                                                                   [(ngModel)]="service.tipoServicio" disabled>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                          <div class="form-group">
+                                                            <label for="attendant"><b>Nombre acudiente</b></label>
+                                                            <input type="text" class="form-control" name="attendant" id="attendant"
+                                                                   [(ngModel)]="attendant" required>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                          <div class="form-group">
+                                                            <label for="pattient"><b>Nombre paciente</b></label>
+                                                            <input type="text" class="form-control" name="pattient" id="pattient"
+                                                                   [(ngModel)]="pattient" required>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      <br>
+                                                      <div class="row">
+                                                        <div class="col-md-4">
+                                                          <div class="form-group">
+                                                            <label for="description"><b>Descripción</b></label>
+                                                            <input type="text" class="form-control" name="description" id="description"
+                                                                   [(ngModel)]="service.descripcion" disabled>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                          <div class="form-group">
+                                                            <label for="description"><b>Precio</b></label>
+                                                            <input type="number" class="form-control" name="price" id="price"
+                                                                   [(ngModel)]="service.precio" value="{{service.precio}}" disabled>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                          <div class="form-group">
+                                                            <label for="description"><b>Fecha de la cita</b></label>
+                                                            <input type="date" class="form-control" name="date" id="date"
+                                                                   [(ngModel)]="service.fecha" required>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      <br>
+                                                      <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button type="submit" class="btn btn-schedule">Agendar</button>
+                                                        </div>
+                                                      </div>
+                                                    }
+                                                  </form>
+                                            </div>
+                                            <div class="buttonsServices">
+                                                <button type="button" class="btn btn-remove" 
+                                                (click)="deleteServiceSelected()" [disabled]="!selectedService">
+                                                    Deseleccionar servicio
+                                                </button>
+                                              </div>
+                                        }
+                                    }
                             </div>
-                        }
-                    }
+                        </mat-tab>
+                        <!--Pestaña para la tabla de servicios agendados-->
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>search</mat-icon> Servicios agendados
+                            </ng-template>
+                            <br>
+                            <div class="container">
+                                <div class="container-fluid">
+                                    <div class="mat-elevation-z8">
+                                        <!--Filtro de busqueda-->
+                                        <mat-form-field>
+                                            <mat-label>Buscar servicios agendados</mat-label>
+                                            <input matInput (keyup)="filterService($event)" #input>
+                                        </mat-form-field>
+                
+                                        <table mat-table [dataSource]="dataSource">
+                                    
+                                        <!-- Columna de id-->
+                                        <ng-container matColumnDef="Id">
+                                            <th mat-header-cell *matHeaderCellDef><b>IdServicio </b></th>
+                                            <td mat-cell *matCellDef="let service"> <b>{{service.id}}</b> </td>
+                                        </ng-container>
+                                                            
+                                        <!-- Columna de tipo servicio-->
+                                        <ng-container matColumnDef="typeService">
+                                            <th mat-header-cell *matHeaderCellDef> <b>Tipo servicio</b> </th>
+                                            <td mat-cell *matCellDef="let service"> {{service.tipoServicio}} </td>
+                                        </ng-container>
+                
+                                        <!-- Columna de fecha-->
+                                        <ng-container matColumnDef="Date">
+                                            <th mat-header-cell *matHeaderCellDef class="col"> <b>Fecha servicio</b></th>
+                                            <td mat-cell *matCellDef="let service"> {{service.fecha}} </td>
+                                        </ng-container>
+                                    
+                                        <!-- Columna de precio-->
+                                        <ng-container matColumnDef="Price">
+                                            <th mat-header-cell *matHeaderCellDef> <b>Precio</b> </th>
+                                            <td mat-cell *matCellDef="let service"> {{service.precio}} </td>
+                                        </ng-container>
+                
+                                        <!-- Columna de descripción-->                          
+                                        <ng-container matColumnDef="Description">
+                                            <th mat-header-cell *matHeaderCellDef> <b>Descripción</b> </th>
+                                            <td mat-cell *matCellDef="let service"> {{service.descripcion}} </td>
+                                        </ng-container>
+                
+                                        <!-- Columna de diagnostico--> 
+                                        <ng-container matColumnDef="descDiag">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> <b>Diagnóstico</b> </th>
+                                            <td mat-cell *matCellDef="let service" style="text-align: center;">
+                                                <button type="button" class="btn btn-search" data-bs-toggle="modal" 
+                                                data-bs-target="#exampleModal2" (click)="selectService(service)">
+                                                    <i class="bi bi-search"></i>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                
+                                        <!-- Columna de preescripción--> 
+                                        <ng-container matColumnDef="prescDiag">
+                                            <th mat-header-cell *matHeaderCellDef> <b>Preescripción</b> </th>
+                                            <td mat-cell *matCellDef="let service" style="text-align: center;">
+                                                <button type="button" class="btn btn-search" data-bs-toggle="modal" 
+                                                data-bs-target="#exampleModal2" (click)="selectService(service)">
+                                                    <i class="bi bi-search"></i>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                
+                                        <!-- Columna de idempleado --> 
+                                        <ng-container matColumnDef="idEmpleado">
+                                            <th mat-header-cell *matHeaderCellDef> <b>IdEmpleado</b> </th>
+                                            <td mat-cell *matCellDef="let service"> {{service.idEmpleado}} </td>
+                                        </ng-container>
+                
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                                    
+                                        <mat-paginator [pageSizeOptions]="[3, 10, 20]"
+                                                    showFirstLastButtons
+                                                    aria-label="Servicios por página">
+                                        </mat-paginator>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>shop</mat-icon>Productos
+                            </ng-template>
+                            <br>
+                            @if(selectedProducts.length>0){
+                                <button type="button" class="btn btn-product" data-bs-toggle="modal" 
+                                data-bs-target="#exampleModal4">
+                                    <i class="bi bi-cart-fill"></i> Ver lista ({{cantProducts}})
+                                </button>
+                            }
+                            <div class="products-card-container" style="display: flex;">
+                                @for(product of listProducts; track product){
+                                    <mat-card class="card">
+                                        <img mat-card-image src="assets/img/card-addproduct.png" alt="Foto-product"
+                                        (click)="selectProducts(product)" data-bs-toggle="modal" 
+                                        data-bs-target="#exampleModal">
+                                        <mat-card-content>
+                                            <h4>{{product.nombre}}</h4>
+                                            <p>{{product.descripcion}}</p>
+
+                                        </mat-card-content>
+                                        <mat-card-footer>
+                                            <strong><p>{{product.precio}}$</p></strong>
+                                        </mat-card-footer>
+                                    </mat-card>
+                                }
+                            </div>
+                                                                                      
+                        </mat-tab>
+                      </mat-tab-group>
                 </div>
             </section>
-            <!--Contenedor para la tabla de servicios agendados-->
-            <div class="container">
-                <div class="container-fluid">
-                    <div class="mat-elevation-z8">
-                        <!--Filtro de busqueda-->
-                        <mat-form-field>
-                            <mat-label>Buscar servicios agendados</mat-label>
-                            <input matInput (keyup)="filterService($event)" #input>
-                          </mat-form-field>
-
-                        <table mat-table [dataSource]="dataSource">
-                      
-                          <!-- Columna de id-->
-                          <ng-container matColumnDef="Id">
-                            <th mat-header-cell *matHeaderCellDef><b>IdServicio </b></th>
-                            <td mat-cell *matCellDef="let service"> <b>{{service.id}}</b> </td>
-                          </ng-container>
-                                            
-                          <!-- Columna de tipo servicio-->
-                          <ng-container matColumnDef="typeService">
-                            <th mat-header-cell *matHeaderCellDef> <b>Tipo servicio</b> </th>
-                            <td mat-cell *matCellDef="let service"> {{service.tipoServicio}} </td>
-                          </ng-container>
-
-                          <!-- Columna de fecha-->
-                          <ng-container matColumnDef="Date">
-                            <th mat-header-cell *matHeaderCellDef class="col"> <b>Fecha</b></th>
-                            <td mat-cell *matCellDef="let service"> {{service.fecha}} </td>
-                          </ng-container>
-                      
-                          <!-- Columna de precio-->
-                          <ng-container matColumnDef="Price">
-                            <th mat-header-cell *matHeaderCellDef> <b>Precio</b> </th>
-                            <td mat-cell *matCellDef="let service"> {{service.precio}} </td>
-                          </ng-container>
-
-                          <!-- Columna de descripción-->                          
-                          <ng-container matColumnDef="Description">
-                            <th mat-header-cell *matHeaderCellDef> <b>Descripción</b> </th>
-                            <td mat-cell *matCellDef="let service"> {{service.descripcion}} </td>
-                          </ng-container>
-
-                          <!-- Columna de diagnostico--> 
-                          <ng-container matColumnDef="descDiag">
-                            <th mat-header-cell *matHeaderCellDef class="text-center"> <b>Diagnóstico</b> </th>
-                            <td mat-cell *matCellDef="let service" style="text-align: center;">
-                                <button type="button" class="btn btn-search" data-bs-toggle="modal" 
-                                data-bs-target="#exampleModal2" (click)="selectService(service)">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </td>
-                          </ng-container>
-
-                          <!-- Columna de preescripción--> 
-                          <ng-container matColumnDef="prescDiag">
-                            <th mat-header-cell *matHeaderCellDef> <b>Preescripción</b> </th>
-                            <td mat-cell *matCellDef="let service" style="text-align: center;">
-                                <button type="button" class="btn btn-search" data-bs-toggle="modal" 
-                                data-bs-target="#exampleModal2" (click)="selectService(service)">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </td>
-                          </ng-container>
-
-                          <!-- Columna de idempleado --> 
-                          <ng-container matColumnDef="idEmpleado">
-                            <th mat-header-cell *matHeaderCellDef> <b>IdEmpleado</b> </th>
-                            <td mat-cell *matCellDef="let service"> {{service.idEmpleado}} </td>
-                          </ng-container>
-
-                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
-                      
-                        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                                       showFirstLastButtons
-                                       aria-label="Servicios por página">
-                        </mat-paginator>
-                      </div>
-                      
-                </div>
-            </div>
         </div>
-    </div>
-    <div class="schedule">
-        <!--Modal para agendar el servicio-->
-        <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Agendar</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @if(serviceSelected){
-                        <b>ID servicio</b>
-                        <input type="number" class="form-control mb-3" value="{{serviceSelected.id}}" disabled>
-                        <b>Nombre acudiente</b>
-                        <input type="text" class="form-control mb-3">
-                        <b>Nombre paciente</b>
-                        <input type="text" class="form-control mb-3">
-                        <h6>Servicio</h6>
-                        <input type="text" class="form-control mb-3" value="{{serviceSelected.tipoServicio}}" disabled>
-                        <h6>Descripción</h6>
-                        <input type="text" class="form-control mb-3 input-schedule" value="{{serviceSelected.descripcion}}" disabled>
-                        <h6>Fecha</h6>
-                        <input type="date" class="form-control mb-3 input-schedule" value="Fecha">   
-                    }                                   
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="button" class="btn btn-primary">Agendar</button>
-                </div>
-              </div>
-            </div>
-          </div>
     </div>
     <div class="products-container">
         <!-- Modal para seleccionar productos-->
-        <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Seleccionar productos</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Cantidad</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <table class="table table-striped table-bordered">
-                            <thead style="background-color: #E6E57E;">
-                                <tr style="text-align: center;">
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Producto</th>
-                                    <th scope="col">Descripción</th>
-                                    <th scope="col">Precio</th>
-                                    <th scope="col">Agregar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for(product of listProducts; track product){
-                                <tr style="text-align: center;">
-                                    <th scope="row">{{product.id}}</th>
-                                    <td>{{product.nombre}}</td>
-                                    <td>{{product.descripcion}}</td>
-                                    <td>{{product.precio}}$</td>
-                                    <td>
-                                        <button type="button" class="btn btn-product" (click)="selectProducts(product)">
-                                            <i class="bi bi-cart-plus-fill"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <div class="products-selected">
-                            @if(selectedProducts.length<1){ <h6 style="text-align: center; font-weight: bold;">No se han
-                                seleccionado productos</h6>
-                                }
-                                @else {
-                                <h6 style="text-align: center; font-weight: bold;">Productos seleccionados</h6>
-                                <hr>
-                                @for(product of selectedProducts; track product){
-                                <div class="products-aggrates">
-                                    <div class="alert alert-primary">
-                                        {{product.nombre}}
-                                        ${{product.precio}}
-                                    </div>
-                                    <button type="button" class="btn btn-delete-product"
-                                        (click)="deleteProductSelected(product)">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                    <br>
-                                </div>
-                                }
-                                }
-                        </div>
+                        <b>Selecciona una cantidad para el producto</b>
+                        <input type="text" class="form-control" value="{{addedProduct.nombre}}" disabled>
+                        <input type="number" class="form-control" min="1" value="1" [(ngModel)]="addedProduct.cantUso">   
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addProducts()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal para mostrar todos los productos que se hayan seleccionado-->
+        <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Productos añadidos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @for(product of selectedProducts; track product){
+                            <div class="products-aggrates">
+                                <div class="alert alert-primary">
+                                    {{product.nombre}}
+                                    ${{product.precio}}
+                                    {{product.cantUso}} unidad(es)
+                                </div>
+                                <button type="button" class="btn btn-delete-product"
+                                    (click)="deleteProductSelected(product)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                <br>
+                            </div>
+                        }                            
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveProducts()">Guardar</button>
                     </div>
                 </div>
             </div>
