@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { api } from '../settings/api';
 
 @Injectable({
@@ -45,18 +45,37 @@ export class LoginService {
    * @author Meyer Usuga Restrepo <theagensfrontend>
   */
 
-  getUser(){
+  getUser() {
     let user = null;
     user = localStorage.getItem('userlogin');
 
-    return user; 
+    return user;
   }
 
-  getProfile(){
+  getProfile() {
     let profile = null;
     profile = localStorage.getItem('userProfile');
-    
-    return profile; 
+
+    return profile;
+  }
+
+  /** Método para crear encabezados con las credenciales
+   * y hacer peticiones al backend en el servidor
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+   */
+
+  getHeaders(): HttpHeaders {
+
+    /** Definimos credenciales para el api */
+    const username = '11178375';
+    const password = '60-dayfreetrial';
+    let credentials = btoa(username + ':' + password);
+
+    return new HttpHeaders({
+      'Content-Type':  'multipart/form-data',
+      'Authorization': credentials
+    });
+
   }
 
   /** Método para hacer una petición al backend
@@ -72,7 +91,9 @@ export class LoginService {
       .set('clave', password);
 
     /** Enviamos la petición */
-    return this.http.post<any>(this.apiUrl + 'login', {}, { params: params });
+    return this.http.post<any>(this.apiUrl + 'login', {}, { 
+        params: params, 
+        observe: 'response' });
   }
 
   /** Método  para cerrar sesión de un empleado
@@ -80,10 +101,7 @@ export class LoginService {
   */
 
   logoutUser() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userlogin');
-    localStorage.removeItem('serviceSelected');
+    localStorage.clear(); 
   }
-
 }
 

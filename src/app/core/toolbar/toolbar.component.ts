@@ -46,7 +46,7 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.getComponents();
     this.token = this.loginService.getToken();
-    this.username = this.loginService.getUser();
+    this.username = this.loginService.getUser()?.toUpperCase();
     this.userProfile = this.loginService.getProfile();
   }
 

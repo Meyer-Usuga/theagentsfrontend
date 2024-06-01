@@ -1,25 +1,11 @@
-/* Estilos del calendario */
-.scheduling-calendar {
-    width: 700px;
-    background-color: #dcdcf8;
-    float: inline-end;
-    margin-right: 30%;
-    margin-top: 10%;
-}
-
 /* Estilos de los contenedores */
 .container-fluid {
     align-items: center;
+    width: 100%;
 }
 
 .flex-container {
-    display: flex;
-    align-items: center;
-}
-
-section {
-    margin-left: 10%;
-    flex: 1;
+    margin-top: 5%;
 }
 
 /* Estilos de los titulos y textos*/
@@ -29,58 +15,65 @@ section {
 }
 
 .title h1 {
-    font-size: 85px;
+    font-size: 70px;
     font-weight: bold;
+    margin-bottom: 0%;
 }
 
 .title h4 {
     font-size: 40px;
 }
 
-.selected-services {
+.schedule-service {
     padding: 10px;
-    width: 40%;
     font-size: 14px;
     border-radius: 10px;
     margin-top: 20px;
-    margin-bottom: 20px;
-    background-color: #C7D0D8;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
-.products-aggrates{
+.alertService {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    margin-top: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #e0dfdf;
+}
+
+section {
+    width: 85%;
+    text-align: start;
+}
+
+.products-aggrates {
     display: flex;
     align-items: center;
 }
 
-
-/* Estilos del banner */
-.calendar {
-    padding: 0;
-    position: relative;
-    font-size: 11px;
+.input-schedule {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.buttonsProducts {
+.addInfo {
+    background-color: #e0dfdf;
+}
 
-    width: 40%;
+/* Estilos de los botones */
+
+.buttonsProducts {
+    width: 100%;
     margin-top: 10px;
 }
 
 .buttonsServices {
-    width: 40%;
+    width: 100%;
 }
 
-/* Estilos de los botones */
 .btn-send {
-    color: black;
-    border: none;
-    font-size: 17px;
-    border-radius: 10px;
-    background-color: #E6E57E;
-}
-
-.btn-product {
     color: black;
     border: none;
     font-size: 17px;
@@ -92,36 +85,59 @@ section {
     transform: scale(1.1);
 }
 
+.btn-product {
+    color: black;
+    border: none;
+    font-size: 17px;
+    border-radius: 10px;
+    background-color: #E6E57E;
+}
+
 .btn-add {
     color: black;
     border: none;
     font-size: 17px;
     float: inline-end;
     border-radius: 10px;
-    background-color: #5ce1e6;
+    background-color: #E6E57E;
 }
 
 .btn-add:hover {
     transform: scale(1.1);
 }
 
-.btn-delete {
+.btn-search {
     color: black;
     border: none;
-    margin-left: 5px;
     font-size: 17px;
-    float: inline-end;
     border-radius: 10px;
-    background-color: #e84331;
+    background-color: #E6E57E;
 }
 
-.btn-delete-product{
+.btn-search:hover {
+    transform: scale(1.1);
+}
+
+.btn-delete-product {
     color: black;
     background-color: transparent !important;
 }
 
-.btn-delete:hover {
-    transform: scale(1.1);
+.btn-schedule{
+    color: white;
+    border: none;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-right: 10px;
+    background-color: #5EA3FF;
+}
+
+.btn-remove{
+    color: white;
+    border: none;
+    font-size: 15px;
+    border-radius: 10px;
+    background-color: #e84331;
 }
 
 /* Alertas */
@@ -132,7 +148,7 @@ section {
     margin: 15px;
 }
 
-.alert-primary{
+.alert-primary {
     font-size: 13px;
     padding: 10px;
     margin: 0;
@@ -141,6 +157,11 @@ section {
     color: black;
     font-weight: bold;
     background-color: #E6E57E;
+}
+
+/* estilos de la tabla */
+mat-form-field {
+    width: 100%;
 }
 
 /* aparicion */

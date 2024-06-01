@@ -67,24 +67,24 @@ export default class ServiceComponent implements OnInit {
       },
       {
         id: '3',
-        img: 'assets/img/card-vacuna.png',
-        name: 'Vacunación',
-        price: '35.00$',
-        description: 'Vacunación preventiva para mascotas'
-      },
-      {
-        id: '4',
         img: 'assets/img/card-ducha.png',
         name: 'Baño general',
         price: '30.00$',
         description: 'Baño y limpieza general para mascotas',
       },
       {
-        id: '5',
+        id: '4',
         img: 'assets/img/card-pastillas.png',
         name: 'Desparasitación',
         price: '20.00$',
         description: 'Tratamiento para eliminar parásitos internos y externos',
+      },
+      {
+        id: '5',
+        img: 'assets/img/card-vacuna.png',
+        name: 'Vacunación',
+        price: '35.00$',
+        description: 'Vacunación preventiva para mascotas'
       },
 
     ]
@@ -98,7 +98,6 @@ export default class ServiceComponent implements OnInit {
     this.vetServices.getServices().subscribe({
       next: (data: Service[]) => {
         this.services = data; 
-        console.log(this.services); 
       },
       error: error =>{
         console.log(<any>error);

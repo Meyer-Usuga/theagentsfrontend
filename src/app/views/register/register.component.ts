@@ -2,8 +2,9 @@ import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RegisterService } from '../../services/register.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,7 @@ export default class RegisterComponent {
 
   /** Inyección del servicio */
   registerService = inject(RegisterService);
+  router = inject(Router);
 
   /** Formulario */
   registerForm!: FormGroup;
@@ -58,7 +60,7 @@ export default class RegisterComponent {
       this.registerService.createUser(this.user).subscribe({
         next: response =>{
           if(response){
-            window.alert('Empleado registrado con éxito');
+            this.showAlert('success', 'Registro éxitoso.')
           }
           else{
             window.alert('Ocurrió un error durante el registro');
@@ -84,5 +86,26 @@ export default class RegisterComponent {
       this.user.sexo = 'M';
     if(male.checked)
       this.user.sexo = 'H';
+  }
+
+
+  /** Método para mostrar un mensaje responsive
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+   */
+
+  showAlert(status: any, message: any) {
+    return Swal.fire({
+      title: 'Información',
+      text: message,
+      icon: status,
+      timer: 2500,
+      confirmButtonText: "Aceptar",
+      confirmButtonColor: "#5EA3FF",
+      willClose: () =>{
+        if(status == 'success'){
+          this.router.navigate(['/login']);
+        }
+      }
+    })
   }
 }

@@ -24,6 +24,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
 };
 
+/** Función que redirige un usuario al componente principal
+ * si no cuenta con el perfil de gerente para acceder a settings
+ * @author Meyer Usuga Restrepo <theagensfrontend>
+ */
 export const profileGuard: CanActivateFn = (route, state) => {
 
   /** Inyectamos el servicio de login */

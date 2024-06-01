@@ -7,33 +7,31 @@
             <div class="edit-users-container">
                 <div class="managers-container">
                     <h3 class="title">Gerentes</h3>
+                    @for(manager of listManagers; track manager){
                     <span class="items">
                         <i class="bi bi-person-circle icon-profile"></i>
-                        <input type="text" value="Nombre" class="form-control d-inline-block mr-2">
-                        <button type="button" class="btn btn-delete">X</button>
-                        <button type="button" class="btn btn-add"><i class="bi bi-pencil-fill"></i></button>
+                        <input type="text" value="{{manager.usuarioId}}" class="form-control d-inline-block mr-2"
+                            disabled>
+                        <button type="button" class="btn btn-delete" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal" (click)="selectManager(manager)">X
+                        </button>
+                        <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#editModal"
+                            (click)="selectManager(manager)"><i class="bi bi-pencil-fill"></i></button>
                     </span>
+                    }
                 </div>
                 <div class="employees-container">
                     <h3 class="title">Empleados</h3>
+                    @for(employee of listEmployees; track employee){
                     <span class="items">
                         <i class="bi bi-person-circle icon-profile"></i>
-                        <input type="text" value="Nombre" class="form-control d-inline-block mr-2">
-                        <button type="button" class="btn btn-delete">X</button>
-                        <button type="button" class="btn btn-add"><i class="bi bi-pencil-fill"></i></button>
-                    </span>
-                </div>
-                <div class="employees-container">
-                    <h3 class="title">Usuarios</h3>
-                    @for(user of listUsers; track user){
-                    <span class="items">
-                        <i class="bi bi-person-circle icon-profile"></i>
-                        <input type="text" value="{{user.nombre}}" class="form-control d-inline-block mr-2" disabled>
+                        <input type="text" value="{{employee.usuarioId}} - {{employee.tipoEmpleado}}" class="form-control d-inline-block mr-2"
+                            disabled>
                         <button type="button" class="btn btn-delete" data-bs-toggle="modal"
-                            data-bs-target="#deleteModal" (click)="selectUser(user)">X
+                            data-bs-target="#deleteModal" (click)="selectEmployee(employee)">X
                         </button>
                         <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#editModal"
-                            (click)="selectUser(user)"><i class="bi bi-pencil-fill"></i></button>
+                            (click)="selectEmployee(employee)"><i class="bi bi-pencil-fill"></i></button>
                     </span>
                     }
                 </div>
@@ -48,13 +46,28 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @if(detailsUser){
-                        ¿Deseas eliminar el usuario <strong>{{detailsUser.nombre}}</strong> ?
+                        @if(optionModal == 'optManager'){
+                            @if(detailsManager){
+                            ¿Deseas eliminar el gerente <strong>{{detailsManager.usuarioId}}</strong> ?
+                            }
+                        }
+                        @if(optionModal == 'optEmployee'){
+                            @if(detailsEmployee){
+                            ¿Deseas eliminar el empleado <strong>{{detailsEmployee.usuarioId}}</strong> ?
+                            }
                         }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" (click)="deleteUser(detailsUser)">Aceptar</button>
+                        @if(optionModal == 'optManager'){
+                        <button type="button" class="btn btn-primary" (click)="deleteManager(detailsManager)">Eliminar
+                            gerente
+                        </button>
+                        }
+                        @if(optionModal == 'optEmployee'){
+                        <button type="button" class="btn btn-primary" (click)="deleteEmployee(detailsEmployee)">Eliminar empleado
+                        </button>
+                        }
                     </div>
                 </div>
             </div>
@@ -68,29 +81,60 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @if(detailsUser){
-                        <label><b>ID</b></label>
-                        <input type="text" class="form-control mb-3" value="{{detailsUser.id}}" disabled>
-                        <label><b>Nombre</b></label>
-                        <input type="text" class="form-control mb-3" value="{{detailsUser.nombre}}"
-                            [(ngModel)]="detailsUser.nombre">
-                        <label><b>Teléfono</b></label>
-                        <input type="number" class="form-control mb-3" value="{{detailsUser.telefono}}"
-                            [(ngModel)]="detailsUser.telefono">
-                        <label><b>Correo</b></label>
-                        <input type="email" class="form-control mb-3" value="{{detailsUser.correo}}"
-                            [(ngModel)]="detailsUser.correo">
-                        <label><b>Clave</b></label>
-                        <input type="text" class="form-control mb-3" value="{{detailsUser.clave}}"
-                            [(ngModel)]="detailsUser.clave">
-                        <label><b>Edad</b></label>
-                        <input type="number" class="form-control mb-3" value="{{detailsUser.edad}}"
-                            [(ngModel)]="detailsUser.edad">
+                        @if(optionModal == 'optManager'){
+                            @if(detailsManager){
+                                <label><b>ID</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsManager.id}}" disabled>
+                                <label><b>UsuarioID</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsManager.usuarioId}}"
+                                    [(ngModel)]="detailsManager.usuarioId" disabled>
+                                <label><b>Usuario</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsManager.usuario}}"
+                                    [(ngModel)]="detailsManager.usuario" disabled>
+                                <label><b>Fecha contrato {{detailsManager.fechaContrato}}</b></label>
+                                <input type="date" class="form-control mb-3" value="{{detailsManager.fechaContrato}}"
+                                    [(ngModel)]="detailsManager.fechaContrato">
+                            }
+                        }
+                        @if(optionModal == 'optEmployee'){
+                            @if(detailsEmployee){
+                                <label><b>ID</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsEmployee.id}}" disabled>
+                                <label><b>UsuarioID</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsEmployee.usuarioId}}"
+                                    [(ngModel)]="detailsEmployee.usuarioId" disabled>
+                                <label><b>Usuario</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsEmployee.usuario}}"
+                                    [(ngModel)]="detailsEmployee.usuario" disabled>     
+                                <label><b>Sueldo</b></label>
+                                <input type="number" class="form-control mb-3" value="{{detailsEmployee.sueldo}}"
+                                    [(ngModel)]="detailsEmployee.sueldo">  
+                                <label><b>Tipo empleado</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsEmployee.tipoEmpleado}}"
+                                    [(ngModel)]="detailsEmployee.tipoEmpleado">   
+                                <label><b>Hora inicio</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsEmployee.horaInicio}}"
+                                    [(ngModel)]="detailsEmployee.horaInicio">
+                                <label><b>Hora fin</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsEmployee.horaFin}}"
+                                    [(ngModel)]="detailsEmployee.horaFin">
+                                <label><b>Servicio</b></label>
+                                <input type="text" class="form-control mb-3" value="{{detailsEmployee.servicio}}"
+                                    [(ngModel)]="detailsEmployee.servicio">
+                            }
                         }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" (click)="updateUser(detailsUser)">Aceptar</button>
+                        @if(optionModal == 'optManager'){
+                        <button type="button" class="btn btn-primary" (click)="updateManager(detailsManager)">Actualizar
+                            gerente
+                        </button>
+                        }
+                        @if(optionModal == 'optEmployee'){
+                        <button type="button" class="btn btn-primary" (click)="updateEmployee(detailsEmployee)">Actualizar empleado
+                        </button>
+                        }
                     </div>
                 </div>
             </div>

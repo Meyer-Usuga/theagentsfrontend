@@ -3,6 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { api } from '../settings/api';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { Manager } from '../models/manager';
+import { Employee } from '../models/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -16,55 +18,52 @@ export class ProfileService {
     this.apiUrl = api.url;
   }
 
-  /** Método para traer todos los usuarios de bd
+  /** Métodos para traer empleados y gerentes de bd
   * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
 
-  getUsers(): Observable<User[]> {
-
+  getManagers(): Observable<Manager[]> {
     /** hacemos la petición */
-    return this.http.get<User[]>(this.apiUrl + "Usuarios/Get/Usuarios");
+    return this.http.get<Manager[]>(this.apiUrl + "Gerentes/Get/Gerentes");
   }
 
-  /** Método para traer todos los empleados de bd
-  * @author Meyer Usuga Restrepo <theagentsfrontend>
-  */
+  getEmployees(): Observable<Employee[]> {
+    /** hacemos la petición */
+    return this.http.get<Employee[]>(this.apiUrl + "Empleados/Get/Usuarios");
+  }
 
-
-  /** Método para traer todos los gerentes de bd
-  * @author Meyer Usuga Restrepo <theagentsfrontend>
-  */
-
-  /** Método para eliminar un usuario en bd por id 
+  /** Métodos para eliminar gerentes, empleados
    * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
-  deleteUser(idUser: number): Observable<any> {
 
+  deleteManager(idManager: number): Observable<any> {
     /** hacemos la petición enviando el id del usuario */
-    return this.http.delete<any>(this.apiUrl + "Usuarios/" + idUser, { observe: 'response' });
+    return this.http.delete<any>(this.apiUrl + "Gerentes/" + idManager, { observe: 'response' });
   }
 
-  /** Método para eliminar un empleado en bd por id 
-   * @author Meyer Usuga Restrepo <theagentsfrontend>
-  */
+  deleteEmployee(idEmployee: number): Observable<any> {
+    /** hacemos la petición enviando el id del empleado */
+    return this.http.delete<any>(this.apiUrl + "Empleados/" + idEmployee, { observe: 'response' })
+  }
 
-  /** Método para eliminar un gerente en bd por id 
-   * @author Meyer Usuga Restrepo <theagentsfrontend>
-  */
 
-  /** Método para modificar un usuario por id  
-   * 
-  */
-
-  /** Método para editar un usuario por id en bd 
+  /** Métodos para editar gerentes, empleados por id
   * @author Meyer Usuga Restrepo <theagentsfrontend>
   * @author Diego Alexander Valencia <theagentsfrontend> 
   */
-  updateUser(user: User): Observable<any> {
+  updateManager(manager: Manager): Observable<any> {
     /** Capturamos el id */
-    const idUser = user.id;
+    const idManager = manager.usuarioId;
     /** Hacemos la petición */
-    return this.http.put<any>(this.apiUrl + 'Usuarios/' + idUser, user, { observe: 'response' })
+    return this.http.put<any>(this.apiUrl + 'Gerentes/' + idManager, manager, { observe: 'response' })
+  }
+
+  updateEmployee(employee: Employee): Observable<any> {
+    /** capturamos el id */
+    const idEmployee = employee.usuarioId;
+    /** Hacemos la petición */
+    return this.http.put<any>(this.apiUrl + 'Empleados/' + idEmployee, employee, { observe: 'response' })
+
   }
 
 }

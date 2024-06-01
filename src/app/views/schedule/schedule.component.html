@@ -1,53 +1,155 @@
 <div class="schedule-container" class="fade-in">
-    @if(idService == null){
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        No has seleccionado ningún servicio
-        <a [routerLink]="['/theagents/veterinary-service']">Ir a seleccionar un servicio</a>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    }
     <div class="container-fluid">
         <div class="flex-container">
-            <section>
+            <section class="container">
                 <div class="title">
-                    <h1>Agenda</h1>
+                    <h1>Agendar una cita</h1>
                 </div>
-                <div class="selected-services">
-                    @if(idService == null){
-                    <p>No has seleccionado ningún servicio</p>
+                <div class="schedule-service">
+                    @if(idServiceSelected == null){
+                    <div class="alert alertService">
+                        <p>No se ha seleccionado ningún tipo de servicio.</p>
+                        <a [routerLink]="['/theagents/veterinary-service']">
+                            <input type="button" class="btn btn-schedule" value="Buscar servicios">
+                        </a>
+                    </div>
                     }@else {
-                    <h6>Fecha</h6>
-                    <hr>
-                    <p>• Nombre acudiente</p>
-                    <p>• Nombre paciente</p>
-                    <p>• Cantidad servicios</p>
-                    <h6>Descripción</h6>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a dictum mauris. Praesent
-                        ullamcorper mollis lectus a viverra. Suspendisse egestas, purus consequat vehicula lobortis,
-                        massa
-                        enim faucibus arcu, tempor vestibulum ante tortor nec nunc. </p>
+                        @if(serviceSelected){
+                            <div class="alert alertService">
+                                <p>Has seleccionado el servicio: <b>{{serviceSelected.descripcion}}</b></p>
+                                <button type="button" class="btn btn-schedule" data-bs-toggle="modal" data-bs-target="#exampleModal3"
+                                (click)="getSchedule()">
+                                    Agendar el servicio
+                                </button>
+                                <button type="button" class="btn btn-remove" (click)="deleteServiceSelected()" [disabled]="!serviceSelected">
+                                    Deseleccionar servicio
+                                </button>
+                            </div>
+                        }
                     }
                 </div>
-                <div class="buttonsServices">
-                    <button type="button" class="btn btn-send" (click)="scheduleService()">Agendar cita</button>
-                    <button type="button" class="btn btn-delete">X</button>
-                    <button type="button" class="btn btn-add"><i class="bi bi-pencil-fill"></i></button>
-                </div>
-                <div class="buttonsProducts">
-                    <button type="button" class="btn btn-send" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">Productos</button>
-                </div>
             </section>
-            <div class="calendar">
-                <mat-card class="scheduling-calendar">
-                    <mat-calendar [(selected)]="dateSelected"></mat-calendar>
-                </mat-card>
+            <!--Contenedor para la tabla de servicios agendados-->
+            <div class="container">
+                <div class="container-fluid">
+                    <div class="mat-elevation-z8">
+                        <!--Filtro de busqueda-->
+                        <mat-form-field>
+                            <mat-label>Buscar servicios agendados</mat-label>
+                            <input matInput (keyup)="filterService($event)" #input>
+                          </mat-form-field>
+
+                        <table mat-table [dataSource]="dataSource">
+                      
+                          <!-- Columna de id-->
+                          <ng-container matColumnDef="Id">
+                            <th mat-header-cell *matHeaderCellDef><b>IdServicio </b></th>
+                            <td mat-cell *matCellDef="let service"> <b>{{service.id}}</b> </td>
+                          </ng-container>
+                                            
+                          <!-- Columna de tipo servicio-->
+                          <ng-container matColumnDef="typeService">
+                            <th mat-header-cell *matHeaderCellDef> <b>Tipo servicio</b> </th>
+                            <td mat-cell *matCellDef="let service"> {{service.tipoServicio}} </td>
+                          </ng-container>
+
+                          <!-- Columna de fecha-->
+                          <ng-container matColumnDef="Date">
+                            <th mat-header-cell *matHeaderCellDef class="col"> <b>Fecha</b></th>
+                            <td mat-cell *matCellDef="let service"> {{service.fecha}} </td>
+                          </ng-container>
+                      
+                          <!-- Columna de precio-->
+                          <ng-container matColumnDef="Price">
+                            <th mat-header-cell *matHeaderCellDef> <b>Precio</b> </th>
+                            <td mat-cell *matCellDef="let service"> {{service.precio}} </td>
+                          </ng-container>
+
+                          <!-- Columna de descripción-->                          
+                          <ng-container matColumnDef="Description">
+                            <th mat-header-cell *matHeaderCellDef> <b>Descripción</b> </th>
+                            <td mat-cell *matCellDef="let service"> {{service.descripcion}} </td>
+                          </ng-container>
+
+                          <!-- Columna de diagnostico--> 
+                          <ng-container matColumnDef="descDiag">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> <b>Diagnóstico</b> </th>
+                            <td mat-cell *matCellDef="let service" style="text-align: center;">
+                                <button type="button" class="btn btn-search" data-bs-toggle="modal" 
+                                data-bs-target="#exampleModal2" (click)="selectService(service)">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </td>
+                          </ng-container>
+
+                          <!-- Columna de preescripción--> 
+                          <ng-container matColumnDef="prescDiag">
+                            <th mat-header-cell *matHeaderCellDef> <b>Preescripción</b> </th>
+                            <td mat-cell *matCellDef="let service" style="text-align: center;">
+                                <button type="button" class="btn btn-search" data-bs-toggle="modal" 
+                                data-bs-target="#exampleModal2" (click)="selectService(service)">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </td>
+                          </ng-container>
+
+                          <!-- Columna de idempleado --> 
+                          <ng-container matColumnDef="idEmpleado">
+                            <th mat-header-cell *matHeaderCellDef> <b>IdEmpleado</b> </th>
+                            <td mat-cell *matCellDef="let service"> {{service.idEmpleado}} </td>
+                          </ng-container>
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                      
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                                       showFirstLastButtons
+                                       aria-label="Servicios por página">
+                        </mat-paginator>
+                      </div>
+                      
+                </div>
             </div>
         </div>
     </div>
+    <div class="schedule">
+        <!--Modal para agendar el servicio-->
+        <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Agendar</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if(serviceSelected){
+                        <b>ID servicio</b>
+                        <input type="number" class="form-control mb-3" value="{{serviceSelected.id}}" disabled>
+                        <b>Nombre acudiente</b>
+                        <input type="text" class="form-control mb-3">
+                        <b>Nombre paciente</b>
+                        <input type="text" class="form-control mb-3">
+                        <h6>Servicio</h6>
+                        <input type="text" class="form-control mb-3" value="{{serviceSelected.tipoServicio}}" disabled>
+                        <h6>Descripción</h6>
+                        <input type="text" class="form-control mb-3 input-schedule" value="{{serviceSelected.descripcion}}" disabled>
+                        <h6>Fecha</h6>
+                        <input type="date" class="form-control mb-3 input-schedule" value="Fecha">   
+                    }                                   
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary">Agendar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
     <div class="products-container">
         <!-- Modal para seleccionar productos-->
-        <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -82,30 +184,65 @@
                             </tbody>
                         </table>
                         <div class="products-selected">
-                            @if(selectedProducts.length<1){
-                                <h6 style="text-align: center; font-weight: bold;">No se han seleccionado productos</h6>
-                            }
-                            @else {
+                            @if(selectedProducts.length<1){ <h6 style="text-align: center; font-weight: bold;">No se han
+                                seleccionado productos</h6>
+                                }
+                                @else {
                                 <h6 style="text-align: center; font-weight: bold;">Productos seleccionados</h6>
                                 <hr>
                                 @for(product of selectedProducts; track product){
                                 <div class="products-aggrates">
                                     <div class="alert alert-primary">
                                         {{product.nombre}}
-                                         ${{product.precio}}
+                                        ${{product.precio}}
                                     </div>
-                                    <button type="button" class="btn btn-delete-product" (click)="deleteProductSelected(product)">
+                                    <button type="button" class="btn btn-delete-product"
+                                        (click)="deleteProductSelected(product)">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                     <br>
                                 </div>
                                 }
-                            }
+                                }
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="descriptionDiagnostic">
+        <div class="descriptionDiagnostic">
+            <!--Modal para añadir o consultar descripción a un diagnostico-->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Descripción diagnóstico</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @if(detailsService){
+                                @if(detailsService.descDiagnostico){
+                                    <h6>Actualizar descripción</h6>
+                                }
+                                @else {
+                                    <h6>Añadir descripción</h6>
+                                }
+                                <textarea class="form-control mb-3 addInfo" value="{{detailsService.descDiagnostico}}" 
+                                    [(ngModel)]="detailsService.descDiagnostico">
+                                </textarea>
+                            }
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" (click)="updateService('Descripción')">
+                            Guardar
+                        </button>
+                        </div>
                     </div>
                 </div>
             </div>

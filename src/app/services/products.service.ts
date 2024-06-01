@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Product } from '../models/product';
 import { api } from '../settings/api';
@@ -20,6 +20,9 @@ export class ProductsService {
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl + "Productos");
   }
+
+
+
 
 
 }

@@ -19,7 +19,7 @@ export default class LoginComponent implements OnInit {
   router = inject(Router);
 
   public token: any;
-
+  public profile: any;
   /** Formulario */
   loginForm!: FormGroup;
 
@@ -48,19 +48,20 @@ export default class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
 
       /** Obtenemos los datos del formulario  */
-      let username = this.loginForm.get('username')?.value; 
-      let password = this.loginForm.get('password')?.value; 
+      let username = this.loginForm.get('username')?.value;
+      let password = this.loginForm.get('password')?.value;
 
       /** Usamos el servicio del login enviando los datos */
       this.loginService.loginUsuer(username, password).subscribe({
         next: response => {
-          if (response.message == 'Inicio de sesión exitoso') {
-
+          if (response.status == 200) {
+            
             //generamos un token y guardamos datos
             this.token = this.loginService.createToken();
+            this.profile = response.body.message;
             localStorage.setItem('token', this.token);
-            localStorage.setItem('userlogin',username);
-            localStorage.setItem('userProfile','Gerente'); 
+            localStorage.setItem('userlogin', username);
+            localStorage.setItem('userProfile', this.profile);
 
             //llevamos al inicio
             const urlTree = this.router.createUrlTree(['theagents/']);

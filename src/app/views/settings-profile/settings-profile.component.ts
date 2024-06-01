@@ -3,12 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 import { User } from '../../models/user';
 import { LoginService } from '../../services/login.service';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { Manager } from '../../models/manager';
+import { Employee } from '../../models/employee';
 
 @Component({
   selector: 'app-settings-profile',
   standalone: true,
-  imports: [FormsModule,MatPaginatorModule],
+  imports: [FormsModule, MatPaginatorModule],
   templateUrl: './settings-profile.component.html',
   styleUrl: './settings-profile.component.css'
 })
@@ -18,40 +20,39 @@ export default class SettingsProfileComponent implements OnInit {
   profilesService = inject(ProfileService);
   loginService = inject(LoginService);
 
-  /** Lista de usuarios */
-  public listUsers: User[] = [];
   /** Usuario logueado */
   public userLogin: any;
-  /** Usuario a editar o eliminar */
-  public detailsUser!: User; 
+
+  /** Listas de usuarios, empleados y gerentes */
+  public listUsers: User[] = [];
+  public listManagers: Manager[] = [];
+  public listEmployees: Employee[] = [];
+
+  /** Gerente/Empleado a editar o eliminar */
+  public detailsManager!: Manager;
+  public detailsEmployee!: Employee;
+
+  /** Variable para controlar el contenido de los modal */
+  public optionModal: any;
 
   constructor() { }
 
+  /** Método que se ejecuta después de que se carga el componente */
   ngOnInit(): void {
-    this.getAllUsers();
     this.getAllEmployees();
     this.getAllManagers();
     this.userLogin = this.loginService.getUser();
   }
 
-
-  /** Método que selecciona el usuario para editar, o eliminar 
-  * @author Meyer Usuga Restrepo <theagentsfrontend>
-  * @author Diego Alexander Valencia <theagentsfrontend> 
-  */
-
-  selectUser(user:User){
-    this.detailsUser = user; 
-  }
-
-  /** Método que nos lista todos los usuarios en bd 
+  /** Métodos para listar empleados, gerentes de bd
   * @author Meyer Usuga Restrepo <theagentsfrontend>
   */
 
-  getAllUsers() {
-    this.profilesService.getUsers().subscribe({
-      next: (data: User[]) => {
-        this.listUsers = data;
+  getAllManagers() {
+    this.profilesService.getManagers().subscribe({
+      next: (data: Manager[]) => {
+        this.listManagers = data;
+        console.log(this.listManagers)
       },
       error: error => {
         console.log(<any>error);
@@ -59,56 +60,102 @@ export default class SettingsProfileComponent implements OnInit {
     })
   }
 
-  getAllEmployees() { }
-
-  getAllManagers() { }
-
-  /** Método que nos permite eliminar un usuario por id
-  * @author Meyer Usuga Restrepo <theagentsfrontend>
-  */
-
-  deleteUser(user: User) {
-    /** Validamos que no se elimine el usuario que esta logueado */
-      /** Hacemos la petición mediante el servicio */
-      this.profilesService.deleteUser(user.id).subscribe({
-        next: response => {
-          if (response.status == 204) {
-            window.location.reload();
-          }
-        },
-        error: error => {
-          console.log(<any>error);
-        }
-      })
-
-
+  getAllEmployees() {
+    this.profilesService.getEmployees().subscribe({
+      next: (data: Employee[]) => {
+        this.listEmployees = data;
+        console.log(this.listEmployees);
+      },
+      error: error => {
+        console.log(<any>error);
+      }
+    })
   }
 
-  deleteEmployee(){}
-
-  deleteManager(){}
-
-
-  /** Método que nos permite editar un usuario por id  
+  /** Métodos que seleccionar empleados, gerentes
   * @author Meyer Usuga Restrepo <theagentsfrontend>
   * @author Diego Alexander Valencia <theagentsfrontend> 
   */
 
-  updateUser(user: User){
+  selectManager(manager: Manager) {
+    this.detailsManager = manager;
+    this.optionModal = 'optManager';
+  }
+
+  selectEmployee(employee: Employee) {
+    this.detailsEmployee = employee;
+    this.optionModal = 'optEmployee';
+  }
+
+  /** Métodos para actualizar empleados, gerentes 
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+  */
+
+  updateManager(manager: Manager) {
     /** Nos suscribimos al servicio, enviando el objeto con nuevos datos */
-    this.profilesService.updateUser(user).subscribe({
-      next: response =>{
-        if(response.status == 204){
+    this.profilesService.updateManager(manager).subscribe({
+      next: response => {
+        if (response.status == 204) {
           window.location.reload();
         }
-        else{
+        else {
           window.alert('Ocurrió un error durante el proceso');
         }
       },
-      error: error=>{
-        console.log(<any>error); 
+      error: error => {
+        console.log(<any>error);
       }
     })
+  }
+
+  updateEmployee(employee: Employee) {
+      /** Nos suscribimos al servicio, enviando el objeto con nuevos datos */
+      this.profilesService.updateEmployee(employee).subscribe({
+        next: response =>{
+          if(response.status == 204){
+            window.location.reload();
+          }
+          else{
+            window.alert('Ocurrió un error durante el proceso');
+          }
+        },
+        error: error =>{
+          window.alert('Ocurrió un error durante el proceso');
+          console.log(<any>error);        
+        }
+      })
+   }
+
+  /** Métodos para eliminar empleados, gerentes 
+   * @author Meyer Usuga Restrepo <theagentsfrontend>
+  */
+
+  deleteManager(manager: Manager) {
+    /** Hacemos la petición mediante el servicio */
+    this.profilesService.deleteManager(manager.usuarioId).subscribe({
+      next: response => {
+        if (response.status == 204) {
+          window.location.reload();
+        }
+      },
+      error: error => {
+        console.log(<any>error);
+      }
+    })
+  }
+
+  deleteEmployee(employee: Employee) { 
+    /** Hacemos la petición mediante el servicio */
+    this.profilesService.deleteEmployee(employee.usuarioId).subscribe({
+      next: response =>{
+        if (response.status == 204) {
+          window.location.reload();
+        }
+      },
+      error: error =>{
+        console.log(<any>error);
+      }
+    })    
   }
 
 }
